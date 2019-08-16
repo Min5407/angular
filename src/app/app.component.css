@@ -1,0 +1,19 @@
+nav {
+  background-color: #eee !important;
+}
+
+nav ul {
+  width: 100%;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-around;
+  color: darkslateblue;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+nav ul li {
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+}

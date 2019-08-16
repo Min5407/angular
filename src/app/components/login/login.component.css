@@ -1,0 +1,27 @@
+.login-form {
+  width: 340px;
+  margin: auto;
+  left: 50%;
+  top: 40%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.login-form form {
+  margin-bottom: 15px;
+  background: #f7f7f7;
+  box-shadow: 0px 17px 17px rgba(0, 0, 0, 0.4);
+  padding: 30px;
+  border-radius: 10%;
+}
+.login-form h2 {
+  margin: 0 0 15px;
+}
+.form-control,
+.btn {
+  min-height: 38px;
+  border-radius: 2px;
+}
+.btn {
+  font-size: 15px;
+  font-weight: bold;
+}

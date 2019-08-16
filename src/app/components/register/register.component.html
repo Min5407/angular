@@ -1,0 +1,60 @@
+<div class="login-form">
+  <form method="post">
+    <h2 class="text-center">Log in</h2>
+    <div class="imgcontainer"></div>
+    <div class="form-group">
+      <p>email</p>
+      <input
+        type="email"
+        class="form-control"
+        [(ngModel)]="email"
+        name="email"
+      />
+    </div>
+    <div class="form-group">
+      <p>userName</p>
+
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="userName"
+        name="userName"
+      />
+    </div>
+    <div class="form-group">
+      <p>password</p>
+
+      <input
+        type="password"
+        class="form-control"
+        [(ngModel)]="password"
+        name="password"
+      />
+    </div>
+    <div class="form-group">
+      <p>date</p>
+
+      <input
+        type="date"
+        placeholder="00/00/0000"
+        class="form-control"
+        [(ngModel)]="birthday"
+        name="birthday"
+      />
+    </div>
+    <div class="form-group">
+      <p>age</p>
+
+      <input type="number" class="form-control" [(ngModel)]="age" name="age" />
+    </div>
+    <div class="form-group">
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        (click)="createUser()"
+      >
+        Log in
+      </button>
+    </div>
+  </form>
+</div>
