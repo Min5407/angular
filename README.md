@@ -13,6 +13,17 @@ This assignment uses github, a git repository hosting service, to manage the pro
  
  * http://local:3000/api/register: This route is used to create another user. This is a post method that needs two parametes which are email, password, birthday, age and username. Once the data was sent to the server, this data will be added to the users list. 
 
+# Angular components / Services /Model
+  There are few components and service for this project.
+  1. login component: This component is used to show login form in the DOM and also send request to check the email and password        to the server.
+  
+  2. app component: This is the nav bar component that dispaly the nav with the links like login, logout, register and so on. This component will direct to the certain component and also will block some of the comoponent if the user has no permission to enter certain component.
+  
+  3. account component: This component will display the details of the user by retreving from the storage.
+  
+  4. Register component: This component will display the register form so that the super or group user can create another user. This component will also sends the data to the server so that the server can add the new created user data into the users list.
+
+
 # Assignment1
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
