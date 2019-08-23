@@ -1,6 +1,6 @@
-#3813ICT Assignment1
+# 3813ICT Assignment1
 
-##About Assignment1 
+## About Assignment1 
  This project is about creating chat system using node js as a server and angualr framework as a front-end This project will contain login component, register component, user component and in real time chat with other groups and roles of each users.
  
 ## Version Control
@@ -9,8 +9,9 @@ This assignment uses github, a git repository hosting service, to manage the pro
 ## Rest API 
  Front-end angular will coummuncate with node js server using routes. 
  
- * http://localhost:3000/api/auth: 
+ * http://localhost:3000/api/auth: This route is used to check whether the email and password are correct. This is a post method that needs two parametes which are email and password. Once the user put email and password, the local host 4200 will send a api/auth routes to local host 2000 and check whether the input value of email and password are correct. Once it is correct, this will send a user detail back to the localhost 4200 with a valid true.
  
+ * http://local:3000/api/register: This route is used to create another user. This is a post method that needs two parametes which are email, password, birthday, age and username. Once the data was sent to the server, this data will be added to the users list. 
 
 # Assignment1
 
