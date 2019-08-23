@@ -1,3 +1,10 @@
+#3813ICT Assignment1
+
+##About Assignment1 
+ This project is about creating chat system using node js as a server and angualr framework as a front-end This project will contain login fucntion and in real time chat with other groups and roles of each users.
+## Version Control
+This assignment uses github, a git repository hosting service, to manage the project. The repository name "angualr" was created for the assignment. Once I have done some of the part such as creating a login component, I have added and pushed to my repository. Bascically, I have pushed to my git repository once I have completed some components. This repository will contain REDME.md file to document about the proejct like data strucutre of a variable and also the overall description of the project.
+
 # Assignment1
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
