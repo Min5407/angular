@@ -1,0 +1,61 @@
+<div class="login-form">
+  <form method="post">
+    <h2 class="text-center">Add Group</h2>
+    <div class="imgcontainer"></div>
+    <div class="form-group">
+      <p>group Name</p>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="group"
+        name="group"
+      />
+    </div>
+    <div class="form-group">
+      <p>Group Assis</p>
+      <div class="form-group">
+        <select name="selectedAssis" [(ngModel)]="selectedAssis">
+          <option
+            *ngFor="let user of users"
+            value="{{ user.username }}"
+            name="member"
+            >{{ user.username }}</option
+          >
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <p>members</p>
+      <div>
+        <ul>
+          <li *ngFor="let member of members">{{ member }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <select name="selectedMember" [(ngModel)]="selectedMember">
+        <option
+          *ngFor="let user of users"
+          value="{{ user.username }}"
+          name="member"
+          >{{ user.username }}</option
+        >
+      </select>
+      <button type="submit" (click)="addMembers()">
+        Add
+      </button>
+    </div>
+
+    <div class="form-group">
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        (click)="createGroup()"
+      >
+        Create
+      </button>
+    </div>
+  </form>
+</div>

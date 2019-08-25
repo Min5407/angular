@@ -19,6 +19,9 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
+  getGroups() {
+    return this.http.get<any>(this.backend + "/groups");
+  }
   logIn(email: string, password: string) {
     return this.http.post<User>(this.backend + "/api/auth", {
       email: email,
@@ -29,6 +32,31 @@ export class DataService {
     return this.http.get<any>(this.backend + "/users");
   }
 
+  deleteUser(email: string) {
+    return this.http.post<any>(this.backend + "/api/delete", {
+      email: email
+    });
+  }
+  createGroup(group: any, members, selectedAssis: any) {
+    console.log(members);
+    return this.http.post<any>(this.backend + "/group/create", {
+      group: group,
+      members: members,
+      selectedAssis: selectedAssis
+    });
+  }
+
+  deleteGroup(group: string) {
+    return this.http.post<any>(this.backend + "/group/delete", {
+      group: group
+    });
+  }
+  deleteMember(member: string) {
+    return this.http.post<any>(this.backend + "/group/deleteMember", {
+      member: member
+    });
+  }
+
   register(
     email: string,
     password: string,
@@ -36,7 +64,7 @@ export class DataService {
     birthday: Date,
     age: number
   ) {
-    return this.http.post<User>(this.backend + "/api/register", {
+    return this.http.post<any>(this.backend + "/api/register", {
       email: email,
       password: password,
       username: username,

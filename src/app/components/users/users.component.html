@@ -1,13 +1,13 @@
-<div *ngIf="super; else loading">
+<div>
   <ul *ngFor="let user of users">
     <li>
-      Email: {{ user.email }}<br />
+      Email: <span>{{ user.email }}</span> <br />
       User Name:{{ user.username }}<br />
-      <button type="submit">Delete</button>
+      <button type="submit" (click)="deleteUser(user.email)">Delete</button>
     </li>
   </ul>
 </div>
 
-<ng-template #loading>
+<!-- <ng-template #loading>
   <div>Only Super Admin Only</div>
-</ng-template>
+</ng-template> -->

@@ -20,12 +20,12 @@ export class LoginComponent implements OnInit {
 
   itemClicked() {
     this.dataservice.logIn(this.email, this.password).subscribe(data => {
-      var dataJson = JSON.stringify(data);
-      console.log(dataJson);
-
       if (data.valid === true) {
+        var dataJson = JSON.stringify(data);
         sessionStorage.setItem("user", dataJson);
         this.router.navigateByUrl("/account");
+      } else if (!data) {
+        alert("wrong input!");
       }
     }),
       (error: HttpErrorResponse) => {

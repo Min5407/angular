@@ -1,0 +1,17 @@
+<a *ngIf="valid" href="/groups/create"> Create Group</a>
+
+<ul *ngFor="let group of groups">
+  <h3>{{ group.group }}</h3>
+  <li *ngFor="let member of toArray(group.members)">
+    users: {{ member }}
+    <button *ngIf="valid" type="submit" (click)="deleteMember(member)">
+      Delete
+    </button>
+  </li>
+  <li>
+    Group Assis:{{ group.assis }}<br />
+    <button *ngIf="valid" type="submit" (click)="deleteGroup(group.group)">
+      Delete
+    </button>
+  </li>
+</ul>

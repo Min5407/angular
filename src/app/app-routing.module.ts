@@ -5,12 +5,16 @@ import { LoginComponent } from "./components/login/login.component";
 import { AccountComponent } from "./components/account/account.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { UsersComponent } from "./components/users/users.component";
+import { GroupsComponent } from "./components/groups/groups.component";
+import { CreateGroupComponent } from "./components/create-group/create-group.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "account", component: AccountComponent },
   { path: "register", component: RegisterComponent },
-  { path: "users", component: UsersComponent }
+  { path: "users", component: UsersComponent },
+  { path: "groups", component: GroupsComponent },
+  { path: "groups/create", component: CreateGroupComponent }
 ];
 @NgModule({
   declarations: [],

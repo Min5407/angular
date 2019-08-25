@@ -9,9 +9,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { AccountComponent } from './components/account/account.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
+import { GroupsComponent } from './components/groups/groups.component';
+import { CreateGroupComponent } from './components/create-group/create-group.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, AccountComponent, RegisterComponent, UsersComponent],
+  declarations: [AppComponent, LoginComponent, AccountComponent, RegisterComponent, UsersComponent, GroupsComponent, CreateGroupComponent],
   imports: [
     BrowserModule,
     FormsModule,

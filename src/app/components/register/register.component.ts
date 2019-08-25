@@ -14,10 +14,24 @@ export class RegisterComponent implements OnInit {
   userName: "";
   birthday: Date;
   age: number;
+  super = false;
+  valid: boolean;
+
+  profile;
 
   constructor(private router: Router, private dataservice: DataService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.profile = JSON.parse(sessionStorage.getItem("user"));
+
+    if (this.profile.type == "normal") {
+      alert("Only for Super/Group Admin");
+      this.router.navigateByUrl("/account");
+    } else if (this.profile.type == "group assis") {
+      alert("Only for Super/Group Admin");
+      this.router.navigateByUrl("/account");
+    }
+  }
 
   createUser() {
     this.dataservice
@@ -30,7 +44,18 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe(data => {
         var dataJson = JSON.stringify(data);
-        console.log(data.email);
+        console.log(data.valid);
+
+        if (data.valid === "emailFalse") {
+          alert("user email already exist, create new one");
+        } else if (data.valid === "usernameFalse") {
+          alert("user name already exist, create new one");
+        } else if (data.valid === "bothFalse") {
+          alert("Both user name and email already exist, create new one");
+        } else {
+          var dataJson = JSON.stringify(data);
+          this.router.navigateByUrl("/users");
+        }
       });
   }
 }

@@ -1,7 +1,25 @@
 module.exports = function(app, path) {
+  groups = [
+    {
+      group: "group1",
+      assis: "test3",
+      members: ["Super", "test2", "test3", "test4"]
+    },
+    {
+      group: "group2",
+      assis: "test2",
+      members: ["Super", "test2", "test3", "test4"]
+    },
+    {
+      group: "group3",
+      assis: "test33",
+      members: ["Super", "test2", "test3", "test4"]
+    }
+  ];
+
   users = [
     {
-      username: "test1",
+      username: "Super",
       birthday: "10/01/1990",
       age: "19",
       email: "test1@test.com",
@@ -25,7 +43,7 @@ module.exports = function(app, path) {
       email: "test3@test.com",
       password: "333",
       valid: "",
-      type: "normal"
+      type: "group assis"
     },
     {
       username: "test4",
@@ -37,7 +55,9 @@ module.exports = function(app, path) {
       type: "normal"
     }
   ];
-
+  app.get("/groups", (req, res) => {
+    res.send(groups);
+  });
   app.get("/users", (req, res) => {
     res.send(users);
   });
@@ -47,16 +67,81 @@ module.exports = function(app, path) {
     }
     let newUser = {};
 
-    newUser.valid = false;
     newUser.email = req.body.email;
     newUser.password = req.body.password;
     newUser.username = req.body.username;
     newUser.birthday = req.body.birthday;
     newUser.age = req.body.age;
     newUser.type = "normal";
+    newUser.valid = "";
+
+    users.forEach(user => {
+      if (user.email == newUser.email && user.username == newUser.username) {
+        newUser.valid = "bothFalse";
+        return;
+      } else if (user.email == newUser.email) {
+        newUser.valid = "emailFalse";
+        return;
+      } else if (user.username == newUser.username) {
+        newUser.valid = "usernameFalse";
+        return;
+      }
+    });
 
     users.push(newUser);
     res.send(newUser);
+  });
+  app.post("/group/create", (req, res) => {
+    let valid = true;
+
+    if (!req.body) {
+      return res.sendStatus(400);
+    }
+    let newGroup = {};
+    newGroup.group = req.body.group;
+    newGroup.members = req.body.members;
+    newGroup.assis = req.body.selectedAssis;
+    console.log(req.body.members);
+
+    groups.forEach(group => {
+      if (group.group == newGroup.group) {
+        valid = false;
+      }
+    });
+
+    if ((valid = false)) {
+      res.send(false);
+    } else {
+      groups.push(newGroup);
+      res.send(groups);
+    }
+  });
+
+  app.post("/group/deleteMember", (req, res) => {
+    if (!req.body) {
+      return res.sendStatus(400);
+    }
+    groups.forEach(group => {
+      group.members.forEach((member, index) => {
+        if (member == req.body.member) {
+          group.members.splice(index, 1);
+        }
+      });
+    });
+    res.send(groups);
+  });
+
+  app.post("/api/delete", function(req, res) {
+    if (!req.body) {
+      return res.sendStatus(400);
+    }
+
+    users.forEach((user, index) => {
+      if (user.email == req.body.email) {
+        users.splice(index, 1);
+      }
+    });
+    res.send(users);
   });
 
   app.post("/api/auth", function(req, res) {
@@ -64,30 +149,23 @@ module.exports = function(app, path) {
       return res.sendStatus(400);
     }
     var customer = {};
-    customer.email = "";
-    customer.username = "";
-    customer.password = "";
-    customer.birthday = "";
-    customer.age = 0;
-    customer.valid = false;
-    customer.type = "";
 
-    for (let i = 0; i < users.length; i++) {
-      if (
-        req.body.email == users[i].email &&
-        req.body.password == users[i].password
-      ) {
+    users.forEach(user => {
+      if (req.body.email == user.email && req.body.password == user.password) {
+        customer.email = user.email;
+        customer.password = user.password;
+        customer.username = user.username;
+        customer.birthday = user.birthday;
+        customer.age = user.age;
+        customer.type = user.type;
         customer.valid = true;
-        customer.email = users[i].email;
-        customer.password = users[i].password;
-        customer.username = users[i].username;
-        customer.birthday = users[i].birthday;
-        customer.age = users[i].age;
-        customer.type = users[i].type;
-        res.send(customer);
-      } else {
-        // res.send(check);
       }
+    });
+
+    if (customer.valid == true) {
+      res.send(customer);
+    } else {
+      res.send(false);
     }
   });
 };
