@@ -1,5 +1,4 @@
 <a *ngIf="valid" href="/groups/create"> Create Group</a>
-
 <ul *ngFor="let group of groups">
   <h3>{{ group.group }}</h3>
   <li *ngFor="let member of toArray(group.members)">

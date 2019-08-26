@@ -41,8 +41,6 @@ export class CreateGroupComponent implements OnInit {
 
     if (this.members.length > 0) {
       if (memberValid == true) {
-        console.log(memberValid);
-
         this.members.push(this.selectedMember);
       }
     }
@@ -57,8 +55,9 @@ export class CreateGroupComponent implements OnInit {
       .subscribe(data => {
         if (!data) {
           alert("Group name already exist, create new one");
+        } else {
+          this.router.navigateByUrl("/groups");
         }
-        console.log(data);
       });
   }
 }

@@ -44,7 +44,6 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe(data => {
         var dataJson = JSON.stringify(data);
-        console.log(data.valid);
 
         if (data.valid === "emailFalse") {
           alert("user email already exist, create new one");

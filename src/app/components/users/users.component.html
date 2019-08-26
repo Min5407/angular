@@ -3,7 +3,9 @@
     <li>
       Email: <span>{{ user.email }}</span> <br />
       User Name:{{ user.username }}<br />
-      <button type="submit" (click)="deleteUser(user.email)">Delete</button>
+      <button *ngIf="userType" type="submit" (click)="deleteUser(user.email)">
+        Delete
+      </button>
     </li>
   </ul>
 </div>

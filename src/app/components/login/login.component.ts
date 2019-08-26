@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   itemClicked() {
     this.dataservice.logIn(this.email, this.password).subscribe(data => {
+      console.log(data);
       if (data.valid === true) {
         var dataJson = JSON.stringify(data);
         sessionStorage.setItem("user", dataJson);

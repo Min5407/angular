@@ -13,11 +13,16 @@ export class UsersComponent implements OnInit {
   updatedUsers = [];
   email = "";
   profile;
+  userType;
 
   constructor(private router: Router, private dataservice: DataService) {}
 
   ngOnInit() {
     this.profile = JSON.parse(sessionStorage.getItem("user"));
+    this.userType = false;
+    if (this.profile.type == "super") {
+      this.userType = true;
+    }
 
     if (this.profile.type == "normal") {
       alert("Only for Super/Group Admin");

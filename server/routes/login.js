@@ -3,17 +3,17 @@ module.exports = function(app, path) {
     {
       group: "group1",
       assis: "test3",
-      members: ["Super", "test2", "test3", "test4"]
+      members: ["Super", "test2", "test4"]
     },
     {
       group: "group2",
       assis: "test2",
-      members: ["Super", "test2", "test3", "test4"]
+      members: ["test2", "test3", "test4"]
     },
     {
       group: "group3",
-      assis: "test33",
-      members: ["Super", "test2", "test3", "test4"]
+      assis: "test4",
+      members: ["Super", "test4"]
     }
   ];
 
@@ -25,7 +25,8 @@ module.exports = function(app, path) {
       email: "test1@test.com",
       password: "111",
       valid: "",
-      type: "super"
+      type: "super",
+      groups: ["group1", "group2"]
     },
     {
       username: "test2",
@@ -34,7 +35,8 @@ module.exports = function(app, path) {
       email: "test2@test.com",
       password: "222",
       valid: "",
-      type: "group"
+      type: "group",
+      groups: ["group2", "group3"]
     },
     {
       username: "test3",
@@ -43,7 +45,8 @@ module.exports = function(app, path) {
       email: "test3@test.com",
       password: "333",
       valid: "",
-      type: "group assis"
+      type: "group assis",
+      groups: ["group3", "group1"]
     },
     {
       username: "test4",
@@ -52,7 +55,8 @@ module.exports = function(app, path) {
       email: "test4@test.com",
       password: "444",
       valid: "",
-      type: "normal"
+      type: "normal",
+      groups: ["group2"]
     }
   ];
   app.get("/groups", (req, res) => {
@@ -74,6 +78,7 @@ module.exports = function(app, path) {
     newUser.age = req.body.age;
     newUser.type = "normal";
     newUser.valid = "";
+    newUser.groups = [];
 
     users.forEach(user => {
       if (user.email == newUser.email && user.username == newUser.username) {
@@ -87,8 +92,9 @@ module.exports = function(app, path) {
         return;
       }
     });
-
-    users.push(newUser);
+    if (newUser.valid == "") {
+      users.push(newUser);
+    }
     res.send(newUser);
   });
   app.post("/group/create", (req, res) => {
@@ -101,7 +107,6 @@ module.exports = function(app, path) {
     newGroup.group = req.body.group;
     newGroup.members = req.body.members;
     newGroup.assis = req.body.selectedAssis;
-    console.log(req.body.members);
 
     groups.forEach(group => {
       if (group.group == newGroup.group) {
@@ -109,7 +114,7 @@ module.exports = function(app, path) {
       }
     });
 
-    if ((valid = false)) {
+    if (!valid) {
       res.send(false);
     } else {
       groups.push(newGroup);
@@ -144,6 +149,19 @@ module.exports = function(app, path) {
     res.send(users);
   });
 
+  app.post("/group/delete", function(req, res) {
+    if (!req.body) {
+      return res.sendStatus(400);
+    }
+
+    groups.forEach((group, index) => {
+      if (group.group == req.body.group) {
+        groups.splice(index, 1);
+      }
+    });
+    res.send(groups);
+  });
+
   app.post("/api/auth", function(req, res) {
     if (!req.body) {
       return res.sendStatus(400);
@@ -159,6 +177,7 @@ module.exports = function(app, path) {
         customer.age = user.age;
         customer.type = user.type;
         customer.valid = true;
+        customer.groups = user.groups;
       }
     });
 
