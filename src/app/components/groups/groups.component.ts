@@ -16,6 +16,7 @@ export class GroupsComponent implements OnInit {
   constructor(private router: Router, private dataservice: DataService) {}
 
   ngOnInit() {
+    this.valid = false;
     if (typeof Storage !== "undefined") {
       this.data = JSON.parse(sessionStorage.getItem("user"));
       this.userGroups = this.data.groups;
@@ -26,7 +27,7 @@ export class GroupsComponent implements OnInit {
         this.valid = false;
       }
     }
-    this.valid = false;
+
     this.dataservice.getGroups().subscribe(data => {
       let groups = [];
 
