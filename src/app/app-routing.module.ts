@@ -8,6 +8,8 @@ import { UsersComponent } from "./components/users/users.component";
 import { GroupsComponent } from "./components/groups/groups.component";
 import { CreateGroupComponent } from "./components/create-group/create-group.component";
 import { ChannelsComponent } from "./components/channels/channels.component";
+import { CreateChannelComponent } from "./components/create-channel/create-channel.component";
+import { ChatComponent } from "./components/chat/chat.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -16,7 +18,9 @@ const routes: Routes = [
   { path: "users", component: UsersComponent },
   { path: "groups", component: GroupsComponent },
   { path: "groups/create", component: CreateGroupComponent },
-  { path: "groups/channels", component: ChannelsComponent }
+  { path: "groups/channels", component: ChannelsComponent },
+  { path: "groups/channels/createChannel", component: CreateChannelComponent },
+  { path: "groups/channels/chat", component: ChatComponent }
 ];
 @NgModule({
   declarations: [],

@@ -8,8 +8,9 @@
     </button>
   </li>
   <li>
-    Group Assis:{{ group.assis }}<br />
-    <a href="/groups/channels" (click)="createChannel()">View Channels</a>
+    <button type="button" (click)="viewChannel(group.group)">
+      View Channel
+    </button>
     <button *ngIf="valid" type="submit" (click)="deleteGroup(group.group)">
       Delete
     </button>

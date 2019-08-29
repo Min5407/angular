@@ -20,9 +20,9 @@ export class LoginComponent implements OnInit {
 
   itemClicked() {
     this.dataservice.logIn(this.email, this.password).subscribe(data => {
-      console.log(data);
       if (data.valid === true) {
         var dataJson = JSON.stringify(data);
+        localStorage.setItem("user", dataJson);
         sessionStorage.setItem("user", dataJson);
         this.router.navigateByUrl("/account");
       } else if (!data) {

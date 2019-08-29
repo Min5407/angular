@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   birthday: Date;
   age: number;
   super = false;
+  type: "";
   valid: boolean;
 
   profile;
@@ -34,27 +35,48 @@ export class RegisterComponent implements OnInit {
   }
 
   createUser() {
-    this.dataservice
-      .register(
-        this.email,
-        this.password,
-        this.userName,
-        this.birthday,
-        this.age
-      )
-      .subscribe(data => {
-        var dataJson = JSON.stringify(data);
-
-        if (data.valid === "emailFalse") {
-          alert("user email already exist, create new one");
-        } else if (data.valid === "usernameFalse") {
-          alert("user name already exist, create new one");
-        } else if (data.valid === "bothFalse") {
-          alert("Both user name and email already exist, create new one");
-        } else {
+    console.log(this.age, this.birthday);
+    if (this.email === undefined || this.email == "") {
+      alert("email must not be blank");
+      return;
+    } else if (this.userName === undefined || this.userName == "") {
+      alert("userName must not be blank");
+      return;
+    } else if (this.password === undefined || this.password == "") {
+      alert("password must not be blank");
+      return;
+    } else if (this.type === undefined || this.type == "") {
+      alert("type must not be blank");
+      return;
+    } else if (this.birthday === undefined) {
+      alert("birthday must not be blank");
+      return;
+    } else if ((this.age = undefined)) {
+      alert("age must not be blank");
+      return;
+    } else {
+      this.dataservice
+        .register(
+          this.email,
+          this.password,
+          this.userName,
+          this.birthday,
+          this.type
+        )
+        .subscribe(data => {
           var dataJson = JSON.stringify(data);
-          this.router.navigateByUrl("/users");
-        }
-      });
+
+          if (data.valid === "emailFalse") {
+            alert("user email already exist, create new one");
+          } else if (data.valid === "usernameFalse") {
+            alert("user name already exist, create new one");
+          } else if (data.valid === "bothFalse") {
+            alert("Both user name and email already exist, create new one");
+          } else {
+            var dataJson = JSON.stringify(data);
+            this.router.navigateByUrl("/users");
+          }
+        });
+    }
   }
 }

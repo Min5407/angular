@@ -79,8 +79,7 @@ module.exports = function(app, path) {
     newUser.password = req.body.password;
     newUser.username = req.body.username;
     newUser.birthday = req.body.birthday;
-    newUser.age = req.body.age;
-    newUser.type = "normal";
+    newUser.type = req.body.type;
     newUser.valid = "";
     newUser.groups = [];
 
@@ -114,7 +113,6 @@ module.exports = function(app, path) {
       }
     });
     data = JSON.parse(data);
-    console.log(data);
     let valid = true;
 
     if (!req.body) {
@@ -124,6 +122,7 @@ module.exports = function(app, path) {
     newGroup.group = req.body.group;
     newGroup.members = req.body.members;
     newGroup.assis = req.body.selectedAssis;
+    newGroup.groupAdmin = req.body.groupAdmin;
 
     req.body.members.forEach(member => {
       data.users.forEach(user => {
@@ -160,6 +159,7 @@ module.exports = function(app, path) {
         return data;
       }
     });
+
     data = JSON.parse(data);
 
     if (!req.body) {
@@ -169,14 +169,24 @@ module.exports = function(app, path) {
       group.members.forEach((member, index) => {
         if (member == req.body.member) {
           group.members.splice(index, 1);
-          res.send(data.groups);
-
-          data = JSON.stringify(data);
-          fs.writeFile("data.json", data, function(err, result) {
-            if (err) console.log("error", err);
-          });
         }
       });
+    });
+    // data.users.forEach(user => {
+    //   if (user.username == req.body.member) {
+    //     user.groups.forEach();
+    //   }
+    //   user.groups.forEach((userGroup, index) => {
+    //     if (group.group == userGroup) {
+    //       user.groups.splice(index, 1);
+    //     }
+    //   });
+    // });
+
+    res.send(data.groups);
+    data = JSON.stringify(data);
+    fs.writeFile("data.json", data, function(err, result) {
+      if (err) console.log("error", err);
     });
   });
 

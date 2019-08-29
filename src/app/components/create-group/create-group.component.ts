@@ -9,15 +9,18 @@ import { Route, Router, Data } from "@angular/router";
 export class CreateGroupComponent implements OnInit {
   profile;
   group;
+  groupAdmin;
   members = [];
   users;
+
   selectedMember;
   selectedAssis;
+
   constructor(private router: Router, private dataservice: DataService) {}
 
   ngOnInit() {
     this.profile = JSON.parse(sessionStorage.getItem("user"));
-
+    this.groupAdmin = this.profile.username;
     if (this.profile.type == "normal") {
       alert("Only for Super/Group Admin");
       this.router.navigateByUrl("/account");
@@ -26,6 +29,16 @@ export class CreateGroupComponent implements OnInit {
       this.router.navigateByUrl("/account");
     }
     this.dataservice.getUsers().subscribe(data => {
+      data.forEach((user, index) => {
+        if (
+          (this.profile.type == "group" &&
+            user.username == this.profile.username) ||
+          (this.profile.type == "super" &&
+            user.username == this.profile.username)
+        ) {
+          data.splice(index, 1);
+        }
+      });
       this.users = data;
     });
   }
@@ -50,14 +63,30 @@ export class CreateGroupComponent implements OnInit {
     }
   }
   createGroup() {
-    this.dataservice
-      .createGroup(this.group, this.members, this.selectedAssis)
-      .subscribe(data => {
-        if (!data) {
-          alert("Group name already exist, create new one");
-        } else {
-          this.router.navigateByUrl("/groups");
-        }
-      });
+    if (this.group === undefined || this.group == "") {
+      alert("Group Name can not be empty");
+    } else if (this.members.length == 0) {
+      alert("members can not be empty");
+    } else if (this.selectedAssis === undefined || this.selectedAssis == "") {
+      alert("Group assis can not be empty");
+    } else {
+      this.members.push(this.selectedAssis);
+      this.members.push(this.groupAdmin);
+
+      this.dataservice
+        .createGroup(
+          this.group,
+          this.members,
+          this.selectedAssis,
+          this.groupAdmin
+        )
+        .subscribe(data => {
+          if (!data) {
+            alert("Group name already exist, create new one");
+          } else {
+            this.router.navigateByUrl("/groups");
+          }
+        });
+    }
   }
 }

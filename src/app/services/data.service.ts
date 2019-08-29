@@ -1,4 +1,4 @@
-import { Injectable, Component } from "@angular/core";
+import { Injectable, Component, EventEmitter } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
@@ -15,10 +15,15 @@ interface User {
   providedIn: "root"
 })
 export class DataService {
+  $groupName = new EventEmitter();
+
   backend = "http://localhost:3000";
 
   constructor(private http: HttpClient) {}
 
+  sendGroupName(group) {
+    this.$groupName.emit(group);
+  }
   getGroups() {
     return this.http.get<any>(this.backend + "/groups");
   }
@@ -37,11 +42,12 @@ export class DataService {
       email: email
     });
   }
-  createGroup(group: any, members, selectedAssis: any) {
+  createGroup(group: any, members, selectedAssis: any, groupAdmin: string) {
     return this.http.post<any>(this.backend + "/group/create", {
       group: group,
       members: members,
-      selectedAssis: selectedAssis
+      selectedAssis: selectedAssis,
+      groupAdmin: groupAdmin
     });
   }
 
@@ -61,14 +67,14 @@ export class DataService {
     password: string,
     username: string,
     birthday: Date,
-    age: number
+    type: string
   ) {
     return this.http.post<any>(this.backend + "/api/register", {
       email: email,
       password: password,
       username: username,
       birthday: birthday,
-      age: age
+      type: type
     });
   }
 }

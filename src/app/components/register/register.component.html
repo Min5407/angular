@@ -31,6 +31,15 @@
         name="password"
       />
     </div>
+    <div>
+      <p>Type</p>
+      <select name="type" [(ngModel)]="type">
+        <option value="super">super</option>
+        <option value="group">group</option>
+        <option value="group assis">group assis</option>
+        <option value="normal">normal</option>
+      </select>
+    </div>
     <div class="form-group">
       <p>date</p>
 
@@ -42,11 +51,7 @@
         name="birthday"
       />
     </div>
-    <div class="form-group">
-      <p>age</p>
 
-      <input type="number" class="form-control" [(ngModel)]="age" name="age" />
-    </div>
     <div class="form-group">
       <button
         type="submit"
