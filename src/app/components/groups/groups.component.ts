@@ -27,11 +27,14 @@ export class GroupsComponent implements OnInit {
     this.profile = JSON.parse(sessionStorage.getItem("user"));
   }
 
+  //delete Group
   deleteGroup(group: string) {
     this.dataservice.deleteGroup(group).subscribe(data => {
       this.groups = data;
     });
   }
+
+  //delete Member
   deleteMember(member: string, group: string) {
     this.dataservice.deleteMember(member, group).subscribe(data => {
       this.groups = data;
@@ -43,19 +46,26 @@ export class GroupsComponent implements OnInit {
   toArray(members: object) {
     return Object.keys(members).map(key => members[key]);
   }
-  viewChannel(group) {
+
+  //view channel, set sesstion storage and sending this data to channel component
+  viewChannel(assis, group) {
     sessionStorage.setItem("currentGroup", group);
+    sessionStorage.setItem("assis", assis);
     this.router.navigateByUrl("/groups/channels");
   }
+
+  //add member to the group
   invite(group, inviteMember) {
-    console.log(inviteMember, group);
-    this.dataservice.groupInvite(inviteMember, group).subscribe(data => {
-      console.log(data);
-      if (!data) {
-        alert("user already exist");
-      } else {
-        this.groups = data;
-      }
-    });
+    if (inviteMember == undefined) {
+      alert("select a member");
+    } else {
+      this.dataservice.groupInvite(inviteMember, group).subscribe(data => {
+        if (!data) {
+          alert("user already exist");
+        } else {
+          this.groups = data;
+        }
+      });
+    }
   }
 }

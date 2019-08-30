@@ -22,7 +22,11 @@
       </button>
     </li>
 
-    <select name="inviteMember" [(ngModel)]="inviteMember">
+    <select
+      *ngIf="profile.type == 'super' || profile.type == 'group'"
+      name="inviteMember"
+      [(ngModel)]="inviteMember"
+    >
       <option *ngFor="let user of users" value="{{ user.username }}">{{
         user.username
       }}</option>
@@ -34,7 +38,7 @@
     >
       invite
     </button>
-    <button type="button" (click)="viewChannel(group.group)">
+    <button type="button" (click)="viewChannel(group.assis, group.group)">
       View Channel
     </button>
     <button

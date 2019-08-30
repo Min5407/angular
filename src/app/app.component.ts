@@ -14,6 +14,8 @@ export class AppComponent {
 
   ngOnInIt() {}
 
+  /* functions below are used to navigate the component correctly */
+
   loginLink() {
     if (
       JSON.parse(sessionStorage.getItem("user")) == undefined ||

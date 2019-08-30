@@ -1,6 +1,7 @@
 module.exports = function(app, path) {
   var fs = require("fs");
 
+  // gets certain group infomation
   app.post("/getChannels", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -22,6 +23,8 @@ module.exports = function(app, path) {
       .indexOf(req.body.group);
     res.send(data.groups[groupIndex]);
   });
+
+  //get groups
   app.get("/groups", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -33,6 +36,7 @@ module.exports = function(app, path) {
     res.send(data.groups);
   });
 
+  //get users
   app.get("/users", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -43,6 +47,8 @@ module.exports = function(app, path) {
 
     res.send(data.users);
   });
+
+  //create user
   app.post("/api/register", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -85,6 +91,8 @@ module.exports = function(app, path) {
     }
     res.send(newUser);
   });
+
+  //create group
   app.post("/group/create", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -132,6 +140,7 @@ module.exports = function(app, path) {
     }
   });
 
+  //create channel in a group
   app.post("/createChannel", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -175,6 +184,7 @@ module.exports = function(app, path) {
     });
   });
 
+  //delete channel
   app.post("/deleteChannel", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -213,6 +223,7 @@ module.exports = function(app, path) {
     });
   });
 
+  //delete channel member
   app.post("/channel/deleteMember", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -256,6 +267,7 @@ module.exports = function(app, path) {
     });
   });
 
+  //add channel member
   app.post("/channel/invite", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -332,6 +344,7 @@ module.exports = function(app, path) {
     });
   });
 
+  //delete channel member
   app.post("/group/deleteMember", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -369,6 +382,8 @@ module.exports = function(app, path) {
     });
   });
 
+  //delete user
+
   app.post("/api/delete", function(req, res) {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -396,6 +411,7 @@ module.exports = function(app, path) {
     });
   });
 
+  //delete group
   app.post("/group/delete", function(req, res) {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -430,6 +446,8 @@ module.exports = function(app, path) {
       }
     });
   });
+
+  //add group member
   app.post("/groups/group/invite", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {
@@ -462,6 +480,8 @@ module.exports = function(app, path) {
       if (err) console.log("error", err);
     });
   });
+
+  //authentication
   app.post("/api/auth", function(req, res) {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {
       if (err) {

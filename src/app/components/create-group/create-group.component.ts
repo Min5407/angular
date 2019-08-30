@@ -42,6 +42,8 @@ export class CreateGroupComponent implements OnInit {
       this.users = data;
     });
   }
+
+  //add member to the group which the user is creating
   addMembers() {
     let memberValid = true;
 
@@ -62,6 +64,8 @@ export class CreateGroupComponent implements OnInit {
       this.members.push(this.selectedMember);
     }
   }
+  //create  new group
+
   createGroup() {
     if (this.group === undefined || this.group == "") {
       alert("Group Name can not be empty");

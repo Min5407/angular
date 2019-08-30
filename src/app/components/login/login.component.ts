@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
+  // this function is for login
   itemClicked() {
     this.dataservice.logIn(this.email, this.password).subscribe(data => {
       if (data.valid === true) {

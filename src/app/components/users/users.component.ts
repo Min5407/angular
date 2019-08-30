@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit {
   }
   ngAfterViewInit() {}
 
+  //delete user if clicked
   deleteUser(email: string) {
     this.dataservice.deleteUser(email).subscribe(data => {
       this.users = data;

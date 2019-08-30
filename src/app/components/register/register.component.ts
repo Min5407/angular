@@ -34,6 +34,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  // create User
   createUser() {
     console.log(this.age, this.birthday);
     if (this.email === undefined || this.email == "") {
