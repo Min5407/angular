@@ -12,47 +12,19 @@ export class GroupsComponent implements OnInit {
   groups;
   profile;
   valid;
-  userGroups;
-
+  users;
+  inviteMember;
   constructor(private router: Router, private dataservice: DataService) {}
 
   ngOnInit() {
-    this.valid = false;
-    if (typeof Storage !== "undefined") {
-      this.profile = JSON.parse(sessionStorage.getItem("user"));
-      this.dataservice
-        .logIn(this.profile.email, this.profile.password)
-        .subscribe(data => {
-          if (data.valid === true) {
-            let dataJson = JSON.stringify(data);
-            sessionStorage.setItem("user", dataJson);
-            this.profile = JSON.parse(sessionStorage.getItem("user"));
-            this.userGroups = this.profile.groups;
-            this.dataservice.getGroups().subscribe(data => {
-              let groups = [];
-
-              data.forEach((dat, index) => {
-                this.userGroups.forEach(userGroup => {
-                  if (userGroup == dat.group) {
-                    groups.push(data[index]);
-                  }
-                });
-              });
-
-              if (this.profile.type == "super") {
-                this.groups = data;
-              } else {
-                this.groups = groups;
-              }
-            });
-          }
-        });
-      if (this.profile.type == "super" || this.profile.type == "group") {
-        this.valid = true;
-      } else {
-        this.valid = false;
-      }
-    }
+    this.dataservice.getGroups().subscribe(data => {
+      this.groups = data;
+      this.dataservice.getUsers().subscribe(data => {
+        this.users = data;
+      });
+      console.log(this.groups);
+    });
+    this.profile = JSON.parse(sessionStorage.getItem("user"));
   }
 
   deleteGroup(group: string) {
@@ -60,8 +32,8 @@ export class GroupsComponent implements OnInit {
       this.groups = data;
     });
   }
-  deleteMember(member: string) {
-    this.dataservice.deleteMember(member).subscribe(data => {
+  deleteMember(member: string, group: string) {
+    this.dataservice.deleteMember(member, group).subscribe(data => {
       this.groups = data;
     });
   }
@@ -74,5 +46,16 @@ export class GroupsComponent implements OnInit {
   viewChannel(group) {
     sessionStorage.setItem("currentGroup", group);
     this.router.navigateByUrl("/groups/channels");
+  }
+  invite(group, inviteMember) {
+    console.log(inviteMember, group);
+    this.dataservice.groupInvite(inviteMember, group).subscribe(data => {
+      console.log(data);
+      if (!data) {
+        alert("user already exist");
+      } else {
+        this.groups = data;
+      }
+    });
   }
 }

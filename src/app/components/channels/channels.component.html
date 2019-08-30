@@ -1,11 +1,47 @@
 <h1>Channels</h1>
 <a href="groups/channels/createChannel">Create Channel</a>
 <div *ngFor="let userChannel of userChannels">
-  <h3>
-    {{ userChannel.channel }}
-  </h3>
-  <p *ngFor="let member of toArray(userChannel.members)">
-    Channel Members: {{ member }}
-  </p>
-  <button type="button" (click)="viewChat()">Chat</button>
+  <div
+    *ngIf="
+      userChannel.members.indexOf(profile.username) >= 0 ||
+      profile.type == 'super' ||
+      profile.type == 'group'
+    "
+  >
+    <h3>
+      {{ userChannel.channel }}
+    </h3>
+    <div *ngFor="let member of toArray(userChannel.members)">
+      <p>
+        Channel Members: {{ member }}
+        <button
+          type="submit"
+          (click)="deleteChannelMember(member, userChannel.channel)"
+        >
+          Delete
+        </button>
+      </p>
+    </div>
+
+    <button (click)="deleteChannel(userChannel.channel)">Delete Channel</button>
+
+    <button type="button" (click)="viewChat(member)">Chat</button>
+  </div>
+</div>
+<br />
+<div *ngIf="valid">
+  <select [(ngModel)]="selectChannel" name="selectChannel">
+    <option
+      *ngFor="let channel of userChannels"
+      value="{{ channel.channel }}"
+      >{{ channel.channel }}</option
+    >
+  </select>
+
+  <select [(ngModel)]="selectUser" name="selectUser">
+    <option *ngFor="let user of users" value="{{ user.username }}">{{
+      user.username
+    }}</option>
+  </select>
+  <button (click)="addMember()">Invite</button>
 </div>

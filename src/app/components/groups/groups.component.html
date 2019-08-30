@@ -1,18 +1,48 @@
-<a *ngIf="valid" href="/groups/create"> Create Group</a>
+<a
+  *ngIf="profile.type == 'super' || profile.type == 'group'"
+  href="/groups/create"
+>
+  Create Group</a
+>
 <ul *ngFor="let group of groups">
-  <h3>{{ group.group }}</h3>
-  <li *ngFor="let member of toArray(group.members)">
-    users: {{ member }}
-    <button *ngIf="valid" type="submit" (click)="deleteMember(member)">
-      Delete
+  <div
+    *ngIf="
+      group.members.indexOf(profile.username) >= 0 || profile.type == 'super'
+    "
+  >
+    <h3>{{ group.group }}</h3>
+    <li *ngFor="let member of toArray(group.members)">
+      users: {{ member }}
+      <button
+        *ngIf="profile.type == 'super' || profile.type == 'group'"
+        type="submit"
+        (click)="deleteMember(member, group.group)"
+      >
+        Delete
+      </button>
+    </li>
+
+    <select name="inviteMember" [(ngModel)]="inviteMember">
+      <option *ngFor="let user of users" value="{{ user.username }}">{{
+        user.username
+      }}</option>
+    </select>
+    <button
+      *ngIf="profile.type == 'super' || profile.type == 'group'"
+      type="button"
+      (click)="invite(group.group, inviteMember)"
+    >
+      invite
     </button>
-  </li>
-  <li>
     <button type="button" (click)="viewChannel(group.group)">
       View Channel
     </button>
-    <button *ngIf="valid" type="submit" (click)="deleteGroup(group.group)">
+    <button
+      *ngIf="profile.type == 'super' || profile.type == 'group'"
+      type="submit"
+      (click)="deleteGroup(group.group)"
+    >
       Delete
     </button>
-  </li>
+  </div>
 </ul>

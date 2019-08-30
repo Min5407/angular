@@ -24,6 +24,7 @@ export class DataService {
   sendGroupName(group) {
     this.$groupName.emit(group);
   }
+
   getGroups() {
     return this.http.get<any>(this.backend + "/groups");
   }
@@ -50,14 +51,42 @@ export class DataService {
       groupAdmin: groupAdmin
     });
   }
+  groupInvite(member: string, group: string) {
+    return this.http.post<any>(this.backend + "/groups/group/invite", {
+      member: member,
+      group: group
+    });
+  }
 
   deleteGroup(group: string) {
     return this.http.post<any>(this.backend + "/group/delete", {
       group: group
     });
   }
-  deleteMember(member: string) {
+  deleteMember(member: string, group) {
     return this.http.post<any>(this.backend + "/group/deleteMember", {
+      member: member,
+      group: group
+    });
+  }
+
+  createChannel(channel: string, group: string) {
+    return this.http.post<any>(this.backend + "/createChannel", {
+      channel: channel,
+      group: group
+    });
+  }
+  deleteChannel(group: string, channel: string) {
+    return this.http.post<any>(this.backend + "/deleteChannel", {
+      channel: channel,
+      group: group
+    });
+  }
+
+  channelInvite(groupName, channel, member) {
+    return this.http.post<any>(this.backend + "/channel/invite", {
+      group: groupName,
+      channel: channel,
       member: member
     });
   }
@@ -75,6 +104,19 @@ export class DataService {
       username: username,
       birthday: birthday,
       type: type
+    });
+  }
+  deleteChannelMember(group: string, channel: string, member: string) {
+    return this.http.post<any>(this.backend + "/channel/deleteMember", {
+      group: group,
+      channel: channel,
+      member: member
+    });
+  }
+
+  getChannels(group: string) {
+    return this.http.post<any>(this.backend + "/getChannels", {
+      group: group
     });
   }
 }

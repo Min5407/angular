@@ -12,58 +12,58 @@ export class ChannelsComponent implements OnInit {
   constructor(private router: Router, private dataservice: DataService) {}
 
   profile;
-  userGroups;
-  groups;
   userChannels;
-  // groupName;
+  selectUser;
+  selectChannel;
+  groupName;
 
   ngOnInit() {
-    if (typeof Storage !== "undefined") {
-      this.click.emit();
-      let groupName = sessionStorage.getItem("currentGroup");
+    this.click.emit();
+    let groupName = sessionStorage.getItem("currentGroup");
+    this.profile = JSON.parse(sessionStorage.getItem("user"));
 
-      this.dataservice.getUsers().subscribe(data => {
-        data.forEach(data => {
-          this.profile = JSON.parse(sessionStorage.getItem("user"));
-          if (this.profile.username == data.username) {
-            this.profile = data;
-            this.userGroups = this.profile.groups;
-            this.dataservice.getGroups().subscribe(data => {
-              let groups = [];
+    this.groupName = groupName;
 
-              data.forEach((dat, index) => {
-                this.userGroups.forEach(userGroup => {
-                  if (userGroup == dat.group) {
-                    groups.push(data[index]);
-                  }
-                });
-              });
-
-              if (this.profile.type == "super") {
-                this.groups = data;
-              } else {
-                this.groups = groups;
-                // this.userChannels = this.groups.channels;
-              }
-
-              this.groups.forEach(group => {
-                if (groupName == group.group) {
-                  if (group.channels !== undefined) {
-                    this.userChannels = group.channels;
-                    console.log(typeof this.userChannels[0].members);
-                  }
-                }
-              });
-            });
-          }
-        });
-      });
-    }
+    this.dataservice.getChannels(this.groupName).subscribe(data => {
+      this.userChannels = data.channels;
+      console.log(this.userChannels);
+    });
   }
   toArray(members: object) {
     return Object.keys(members).map(key => members[key]);
   }
   viewChat() {
     this.router.navigateByUrl("groups/channels/chat");
+  }
+
+  addMember() {
+    if (this.selectChannel == undefined) {
+      alert("Choose the channel");
+    } else if (this.selectUser == undefined) {
+      alert("choose the member");
+    } else {
+      this.dataservice
+        .channelInvite(this.groupName, this.selectChannel, this.selectUser)
+        .subscribe(data => {
+          if (!data) {
+            alert("user already exstis");
+          } else {
+            this.userChannels = data;
+          }
+        });
+    }
+  }
+  deleteChannel(channel) {
+    this.dataservice.deleteChannel(this.groupName, channel).subscribe(data => {
+      this.userChannels = data;
+    });
+  }
+
+  deleteChannelMember(member, channel) {
+    this.dataservice
+      .deleteChannelMember(this.groupName, channel, member)
+      .subscribe(data => {
+        this.userChannels = data;
+      });
   }
 }

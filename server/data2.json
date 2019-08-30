@@ -27,7 +27,10 @@
       "valid": "",
       "type": "group assis",
       "groups": ["group3", "group1"],
-      "channels": [{ "group": "group2", "groupChannels": ["channel 2"] }]
+      "channels": [
+        { "group": "group2", "groupChannels": ["channel 2"] },
+        { "group": "group3", "groupChannels": ["channel 1"] }
+      ]
     },
     {
       "username": "test4",
@@ -50,15 +53,18 @@
       "group": "group2",
       "groupAdmin": "test2",
       "assis": "test3",
-      "channels": [{ "channel": "channel 2", "members": ["test2", "test3"] }],
-      "members": ["test2", "test3"]
+      "channels": [
+        { "channel": "channel 2", "members": ["test2", "test3"] },
+        { "channel": "channel 3", "members": ["test4", "test3"] }
+      ],
+      "members": ["test2", "test3", "test4"]
     },
     {
       "group": "group3",
       "assis": "test4",
       "groupAdmin": "test2",
 
-      "members": ["Super", "test4"]
+      "members": ["test3", "test4"]
     }
   ]
 }
