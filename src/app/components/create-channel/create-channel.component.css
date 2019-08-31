@@ -1,0 +1,6 @@
+#component {
+  margin: 2rem;
+}
+#component * {
+  margin: 1.5rem;
+}

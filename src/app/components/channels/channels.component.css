@@ -1,0 +1,31 @@
+#rightCorner {
+  display: block;
+  position: sticky;
+  top: 2rem;
+  text-align: right;
+  margin: 1.5rem;
+  z-index: 2;
+}
+#grid {
+  margin: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-content: center;
+  align-items: center;
+  border: none !important;
+}
+h4 {
+  text-align: center;
+}
+#component {
+  margin: auto;
+  width: 400px;
+  background: #eee;
+}
+
+#component div {
+  margin: 1rem;
+}
+#lastBtn button {
+  margin: 1rem;
+}

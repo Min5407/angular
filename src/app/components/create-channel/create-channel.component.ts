@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { Route, Router, Data } from "@angular/router";
 @Component({
@@ -9,9 +9,15 @@ import { Route, Router, Data } from "@angular/router";
 export class CreateChannelComponent implements OnInit {
   channelName;
   group;
-  constructor(private router: Router, private dataservice: DataService) {}
+  constructor(
+    private elementRef: ElementRef,
+    private router: Router,
+    private dataservice: DataService
+  ) {}
 
   ngOnInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      "#fff";
     this.group = sessionStorage.getItem("currentGroup");
   }
 

@@ -1,4 +1,121 @@
-<h1>Channels</h1>
+<!-- Card -->
+<div id="rightCorner">
+  <a
+    *ngIf="
+      profile.type == 'super' ||
+      profile.type == 'group' ||
+      profile.username == groupAssis
+    "
+    href="groups/channels/createChannel"
+    >Create Channel</a
+  >
+  <!-- invite section -->
+  <div
+    *ngIf="
+      profile.type == 'super' ||
+      profile.type == 'group' ||
+      profile.username == groupAssis
+    "
+  >
+    {{ valid }}
+    <select [(ngModel)]="selectChannel" name="selectChannel">
+      <option
+        *ngFor="let channel of userChannels"
+        value="{{ channel.channel }}"
+        >{{ channel.channel }}</option
+      >
+    </select>
+
+    <select [(ngModel)]="selectUser" name="selectUser">
+      <option *ngFor="let user of users" value="{{ user }}">{{ user }}</option>
+    </select>
+    <button (click)="addMember()">Invite</button>
+  </div>
+</div>
+
+<!-- card section -->
+<div
+  id="grid"
+  *ngFor="let userChannel of userChannels"
+  class="card booking-card"
+>
+  <div
+    id="component"
+    *ngIf="
+      userChannel.members.indexOf(profile.username) >= 0 ||
+      profile.type == 'super' ||
+      profile.type == 'group' ||
+      profile.username == groupAssis
+    "
+  >
+    <!-- Card image -->
+    <div class="view overlay">
+      <img class="card-img-top" src="assets/channel.jpg" alt="Card image cap" />
+      <a href="#!">
+        <div class="mask rgba-white-slight"></div>
+      </a>
+    </div>
+
+    <!-- Card content -->
+    <div class="card-body">
+      <!-- Title -->
+      <h4 class="card-title font-weight-bold">
+        <a>{{ userChannel.channel }} </a>
+      </h4>
+      <div
+        *ngIf="
+          userChannel.members.indexOf(profile.username) >= 0 ||
+          profile.type == 'super' ||
+          profile.type == 'group' ||
+          profile.username == groupAssis
+        "
+      >
+        <p>Members:</p>
+        <div *ngFor="let member of toArray(userChannel.members)">
+          <ul
+            class="list-unstyled list-inline d-flex justify-content-between mb-0"
+          >
+            <li class="list-inline-item mr-0">
+              <p>
+                {{ member }}
+                <button
+                  *ngIf="
+                    profile.type == 'super' ||
+                    profile.type == 'group' ||
+                    profile.username == groupAssis
+                  "
+                  type="submit"
+                  (click)="deleteChannelMember(member, userChannel.channel)"
+                >
+                  Delete
+                </button>
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <div id="lastBtn">
+          <button
+            *ngIf="
+              profile.type == 'super' ||
+              profile.type == 'group' ||
+              profile.username == groupAssis
+            "
+            (click)="deleteChannel(userChannel.channel)"
+          >
+            Delete Channel
+          </button>
+
+          <button type="button" (click)="viewChat(member)">Chat</button>
+        </div>
+      </div>
+      <br />
+    </div>
+  </div>
+</div>
+<!-- Card -->
+
+<!-- <h1>Channels</h1>
 <a
   *ngIf="
     profile.type == 'super' ||
@@ -73,4 +190,4 @@
     <option *ngFor="let user of users" value="{{ user }}">{{ user }}</option>
   </select>
   <button (click)="addMember()">Invite</button>
-</div>
+</div> -->

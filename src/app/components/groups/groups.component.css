@@ -6,7 +6,7 @@
 }
 #grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -20,4 +20,11 @@ li {
 }
 #info * {
   margin: 0.5rem;
+}
+a {
+  margin: 2rem;
+  display: block;
+  text-align: right;
+  position: sticky;
+  top: 2rem;
 }

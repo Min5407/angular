@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { Route, Router, Data } from "@angular/router";
 
@@ -9,7 +15,11 @@ import { Route, Router, Data } from "@angular/router";
 })
 export class ChannelsComponent implements OnInit {
   @Output() click = new EventEmitter();
-  constructor(private router: Router, private dataservice: DataService) {}
+  constructor(
+    private elementRef: ElementRef,
+    private router: Router,
+    private dataservice: DataService
+  ) {}
 
   profile;
   userChannels = [];
@@ -20,6 +30,8 @@ export class ChannelsComponent implements OnInit {
   groupAssis;
   valid;
   ngOnInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      "#fff";
     this.click.emit();
     let groupName = sessionStorage.getItem("currentGroup");
     this.profile = JSON.parse(sessionStorage.getItem("user"));

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { Route, Router, Data } from "@angular/router";
 @Component({
@@ -16,9 +16,15 @@ export class CreateGroupComponent implements OnInit {
   selectedMember;
   selectedAssis;
 
-  constructor(private router: Router, private dataservice: DataService) {}
+  constructor(
+    private router: Router,
+    private dataservice: DataService,
+    private elementRef: ElementRef
+  ) {}
 
   ngOnInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      "#fff";
     this.profile = JSON.parse(sessionStorage.getItem("user"));
     this.groupAdmin = this.profile.username;
     if (this.profile.type == "normal") {
