@@ -1,14 +1,41 @@
-h1 {
-  text-align: center;
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+#component {
+  background: #fff;
+  padding: 1rem;
   margin: 2rem;
+  margin-top: 4rem;
 }
-div {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
-}
-h3 {
+#info {
   margin: 1rem;
   padding: 1rem;
-  border: 1px black solid;
+  display: grid;
+}
+#info div {
+  border-bottom: 1px black dotted;
+  display: grid;
+  grid-template-columns: 0.1fr 0.8fr;
+}
+
+#info div p {
+  padding: 1rem;
+  text-align: left;
+}
+
+#flex {
+  display: flex;
+  align-items: center;
+}
+img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  flex: 0.2;
+  margin: 1rem;
+  margin-left: 2rem;
+}
+#name {
+  margin-left: 2rem;
 }

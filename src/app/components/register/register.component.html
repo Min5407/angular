@@ -1,9 +1,9 @@
-<div class="login-form">
+<div id="component" class="login-form">
   <form method="post">
     <h2 class="text-center">Register</h2>
     <div class="imgcontainer"></div>
     <div class="form-group">
-      <p>email</p>
+      <p>Email</p>
       <input
         type="email"
         class="form-control"
@@ -12,7 +12,7 @@
       />
     </div>
     <div class="form-group">
-      <p>userName</p>
+      <p>UserName</p>
 
       <input
         type="text"
@@ -22,7 +22,7 @@
       />
     </div>
     <div class="form-group">
-      <p>password</p>
+      <p>Password</p>
 
       <input
         type="password"
@@ -31,17 +31,16 @@
         name="password"
       />
     </div>
-    <div>
+    <div id="type">
       <p>Type</p>
       <select name="type" [(ngModel)]="type">
         <option value="super">super</option>
         <option value="group">group</option>
-        <option value="group assis">group assis</option>
         <option value="normal">normal</option>
       </select>
     </div>
     <div class="form-group">
-      <p>date</p>
+      <p>Birthday</p>
 
       <input
         type="date"
@@ -52,7 +51,7 @@
       />
     </div>
 
-    <div class="form-group">
+    <div id="creatBtn" class="form-group">
       <button
         type="submit"
         class="btn btn-primary btn-block"

@@ -1,1 +1,70 @@
-{"users":[{"username":"Super","birthday":"10/01/1990","email":"test1@test.com","password":"111","valid":"","type":"super","groups":["group1","group2"],"channels":[{"group":"group1","groupChannels":["helo"]}]},{"username":"test2","birthday":"22/05/2011","email":"test2@test.com","password":"222","valid":"","type":"group","groups":["group1","group2","group3"],"channels":[{"group":"group2","groupChannels":["channel 2"]}]},{"username":"test3","birthday":"01/01/2012","email":"test3@test.com","password":"333","valid":"","type":"group assis","groups":["group3","group1"],"channels":[{"group":"group2","groupChannels":["channel 2"]},{"group":"group3","groupChannels":["channel 1"]}]},{"username":"test4","birthday":"01/01/2012","email":"test4@test.com","password":"444","valid":"","type":"normal","groups":["group2"]}],"groups":[{"group":"group1","groupAdmin":"test2","assis":"Super","members":["Super","test3"],"channels":[]},{"group":"group2","groupAdmin":"test2","assis":"test3","channels":[{"channel":"channel 2","members":["test2","test3"]},{"channel":"channel 3","members":["test4","test3"]}],"members":["test2","test3","test4"]},{"group":"group3","assis":"test4","groupAdmin":"test2","members":["test3","test4"]}]}
+{
+  "users": [
+    {
+      "username": "Super",
+      "birthday": "10/01/1990",
+      "email": "test1@test.com",
+      "password": "111",
+      "valid": "",
+      "type": "super",
+      "groups": ["group1", "group2"]
+    },
+    {
+      "username": "test2",
+      "birthday": "22/05/2011",
+      "email": "test2@test.com",
+      "password": "222",
+      "valid": "",
+      "type": "group",
+      "groups": ["group1", "group2", "group3"],
+      "channels": [{ "group": "group2", "groupChannels": ["channel 2"] }]
+    },
+    {
+      "username": "test3",
+      "birthday": "01/01/2012",
+      "email": "test3@test.com",
+      "password": "333",
+      "valid": "",
+      "type": "group assis",
+      "groups": ["group3", "group1"],
+      "channels": [
+        { "group": "group2", "groupChannels": ["channel 2"] },
+        { "group": "group3", "groupChannels": ["channel 1"] }
+      ]
+    },
+    {
+      "username": "test4",
+      "birthday": "01/01/2012",
+      "email": "test4@test.com",
+      "password": "444",
+      "valid": "",
+      "type": "normal",
+      "groups": ["group2"]
+    }
+  ],
+  "groups": [
+    {
+      "group": "group1",
+      "groupAdmin": "test2",
+      "assis": "Super",
+      "members": ["Super", "test3"]
+    },
+    {
+      "group": "group2",
+      "groupAdmin": "test2",
+      "assis": "test3",
+      "channels": [
+        { "channel": "channel 2", "members": ["test2", "test3"] },
+        { "channel": "channel 3", "members": ["test4", "test3"] }
+      ],
+      "members": ["test2", "test3", "test4"]
+    },
+    {
+      "group": "group3",
+      "assis": "test4",
+      "groupAdmin": "test2",
+
+      "members": ["test3", "test4"]
+    }
+  ]
+}

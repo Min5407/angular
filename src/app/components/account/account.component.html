@@ -1,7 +1,30 @@
-<h1>Account Page</h1>
-
-<div>
-  <h3>Email: {{ data.email }}</h3>
-  <h3>Username: {{ data.username }}</h3>
-  <h3>Birthday: {{ data.birthday }}</h3>
+<div id="component">
+  <div id="flex">
+    <img src="assets/profile.jpg" alt="profile" />
+    <div id="name">
+      <h2>{{ data.username }}</h2>
+    </div>
+  </div>
+  <div id="info">
+    <div>
+      <p><strong>email:</strong></p>
+      <p>{{ data.email }}</p>
+    </div>
+    <div>
+      <p><strong>Birthday:</strong></p>
+      <p>{{ data.birthday }}</p>
+    </div>
+    <div>
+      <p><strong> Something:</strong></p>
+      <p>Something ....</p>
+    </div>
+    <div>
+      <p><strong>Something:</strong></p>
+      <p>Something ....</p>
+    </div>
+    <div>
+      <p><strong>Something:</strong></p>
+      <p>Something ....</p>
+    </div>
+  </div>
 </div>

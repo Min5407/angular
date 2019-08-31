@@ -1,15 +1,29 @@
-<div>
-  <ul *ngFor="let user of users">
-    <li>
-      Email: <span>{{ user.email }}</span> <br />
-      User Name:{{ user.username }}<br />
-      <button *ngIf="userType" type="submit" (click)="deleteUser(user.email)">
-        Delete
-      </button>
+<div id="component">
+  <ul id="grid">
+    <li *ngFor="let user of users">
+      <img src="assets/user.jpg" width="100px" height="" alt="user" />
+      <div id="info">
+        <h2>{{ user.username }}</h2>
+
+        <p>
+          {{ user.email }}
+        </p>
+        <div id="logo">
+          <a href="/users"><i class="fa fa-twitter"></i></a>
+          <a href="/users"><i class="fa fa-linkedin"></i></a>
+          <a href="/users"><i class="fa fa-facebook"></i></a>
+        </div>
+        <button
+          *ngIf="userType"
+          type="submit"
+          (click)="deleteUser(user.email, user.type)"
+        >
+          Delete
+        </button>
+        <button *ngIf="userType" type="button" (click)="giveSuper(user)">
+          Assign Super
+        </button>
+      </div>
     </li>
   </ul>
 </div>
-
-<!-- <ng-template #loading>
-  <div>Only Super Admin Only</div>
-</ng-template> -->

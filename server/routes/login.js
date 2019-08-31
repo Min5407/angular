@@ -344,6 +344,34 @@ module.exports = function(app, path) {
     });
   });
 
+  //give super type to a user
+  app.post("/giveSuper", (req, res) => {
+    let data = fs.readFileSync("data.json", "utf8", function(err, data) {
+      if (err) {
+        console.log(err);
+      } else {
+        return data;
+      }
+    });
+
+    data = JSON.parse(data);
+
+    if (!req.body) {
+      return res.sendStatus(400);
+    }
+    let userIndex = data.users
+      .map(user => {
+        return user.username;
+      })
+      .indexOf(req.body.user.username);
+
+    data.users[userIndex].type = "super";
+    res.send(data.users);
+    data = JSON.stringify(data);
+    fs.writeFile("data.json", data, function(err, result) {
+      if (err) console.log("error", err);
+    });
+  });
   //delete channel member
   app.post("/group/deleteMember", (req, res) => {
     let data = fs.readFileSync("data.json", "utf8", function(err, data) {

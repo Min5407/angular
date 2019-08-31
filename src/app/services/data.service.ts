@@ -139,4 +139,11 @@ export class DataService {
       group: group
     });
   }
+
+  // give super type to a user
+  giveSuper(user) {
+    return this.http.post<any>(this.backend + "/giveSuper", {
+      user: user
+    });
+  }
 }

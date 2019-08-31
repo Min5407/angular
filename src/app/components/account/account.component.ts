@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-account",
@@ -8,9 +8,12 @@ import { Component, OnInit } from "@angular/core";
 export class AccountComponent implements OnInit {
   data;
 
-  constructor() {}
+  constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      "#ddd";
+
     if (typeof Storage !== "undefined") {
       this.data = JSON.parse(sessionStorage.getItem("user"));
     }

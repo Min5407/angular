@@ -26,10 +26,12 @@ export class AppComponent {
   }
   registerLink() {
     if (
-      JSON.parse(sessionStorage.getItem("user")) !== undefined ||
+      JSON.parse(sessionStorage.getItem("user")) != undefined ||
       JSON.parse(sessionStorage.getItem("user")) !== null
     ) {
       this.router.navigateByUrl("/register");
+    } else {
+      this.router.navigateByUrl("/login");
     }
   }
   accountLink() {

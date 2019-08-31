@@ -17,14 +17,17 @@ export class GroupsComponent implements OnInit {
   constructor(private router: Router, private dataservice: DataService) {}
 
   ngOnInit() {
-    this.dataservice.getGroups().subscribe(data => {
-      this.groups = data;
-      this.dataservice.getUsers().subscribe(data => {
-        this.users = data;
-      });
-      console.log(this.groups);
-    });
     this.profile = JSON.parse(sessionStorage.getItem("user"));
+    if (this.profile == undefined) {
+      this.router.navigateByUrl("/login");
+    } else {
+      this.dataservice.getGroups().subscribe(data => {
+        this.groups = data;
+        this.dataservice.getUsers().subscribe(data => {
+          this.users = data;
+        });
+      });
+    }
   }
 
   //delete Group

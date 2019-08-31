@@ -1,0 +1,36 @@
+#component {
+  margin: 1rem;
+}
+#grid {
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#logo a {
+  margin: 0.5rem;
+}
+#info {
+  margin: 0.5rem;
+  padding: 1rem;
+}
+li {
+  border-radius: 15%;
+  list-style: none;
+  margin: 2rem auto;
+  width: 400px;
+  height: 500px;
+  text-align: center;
+  background: #ddd;
+}
+li img {
+  width: 100%;
+}
+i {
+  font-size: 2rem;
+}
+button {
+  margin: 1rem;
+}

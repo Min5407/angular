@@ -1,0 +1,17 @@
+#component {
+  margin: 3rem;
+}
+h2 {
+  margin-bottom: 1rem;
+}
+#creatBtn {
+  margin: 2rem;
+}
+#type {
+  margin-top: 1rem;
+}
+#type p {
+  display: inline-block;
+
+  margin-right: 0.5rem;
+}
