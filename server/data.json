@@ -47,7 +47,7 @@
       "group": "group1",
       "groupAdmin": "test2",
       "assis": "Super",
-      "members": ["Super", "test3"]
+      "members": ["Super", "test3", "test2"]
     },
     {
       "group": "group2",

@@ -7,7 +7,7 @@
       "password": "111",
       "valid": "",
       "type": "super",
-      "groups": ["group1", "group2"]
+      "groups": ["group1", "group2", "test2"]
     },
     {
       "username": "test2",

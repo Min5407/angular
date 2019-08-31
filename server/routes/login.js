@@ -387,7 +387,6 @@ module.exports = function(app, path) {
     if (!req.body) {
       return res.sendStatus(400);
     }
-    console.log(req.body.group, req.body.member);
 
     var group_index = data.groups
       .map(group => {
@@ -399,15 +398,19 @@ module.exports = function(app, path) {
       req.body.member
     );
 
-    console.log(member_index);
+    if (data.groups[group_index].groupAdmin == req.body.member) {
+      console.log("admin");
+      res.send(false);
+    } else {
+      console.log("delte");
+      data.groups[group_index].members.splice(member_index, 1);
 
-    data.groups[group_index].members.splice(member_index, 1);
-
-    res.send(data.groups);
-    data = JSON.stringify(data);
-    fs.writeFile("data.json", data, function(err, result) {
-      if (err) console.log("error", err);
-    });
+      res.send(data.groups);
+      data = JSON.stringify(data);
+      fs.writeFile("data.json", data, function(err, result) {
+        if (err) console.log("error", err);
+      });
+    }
   });
 
   //delete user

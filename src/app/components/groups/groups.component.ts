@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, ElementRef, OnInit, AfterViewInit } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { Route, Router, Data } from "@angular/router";
 import { ChannelsComponent } from "../channels/channels.component";
@@ -14,9 +14,16 @@ export class GroupsComponent implements OnInit {
   valid;
   users;
   inviteMember;
-  constructor(private router: Router, private dataservice: DataService) {}
+  constructor(
+    private router: Router,
+    private dataservice: DataService,
+    private elementRef: ElementRef
+  ) {}
 
   ngOnInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      "#fff";
+
     this.profile = JSON.parse(sessionStorage.getItem("user"));
     if (this.profile == undefined) {
       this.router.navigateByUrl("/login");
@@ -40,7 +47,11 @@ export class GroupsComponent implements OnInit {
   //delete Member
   deleteMember(member: string, group: string) {
     this.dataservice.deleteMember(member, group).subscribe(data => {
-      this.groups = data;
+      if (!data) {
+        alert("Cannot delete group Admin");
+      } else {
+        this.groups = data;
+      }
     });
   }
 
