@@ -44,7 +44,7 @@ This assignment uses github, a git repository hosting service, to manage the pro
   * http://local:3000/api/delete (post) : this route uses the user's email to delete the user from the server and sends the updated data to the client side.
 
  
- * http://local:3000/groups (get): This route is used to get groups from the server.
+ * http://local:3000/groups (get): This route is used to get groups from the server by returning the groups data to the client side.
  
  * http://local:3000/users (get) : This route uses get method which sends all users from the server to the client side.
  
@@ -71,8 +71,11 @@ This assignment uses github, a git repository hosting service, to manage the pro
  
  
 
-# Angular components / Services /Model
+# Angular components / Services / server
+
   There are few components and service for this project.
+  
+  ### Components
   1. login component: This component is used to show login form in the DOM and also send request to check the email and password  to the server.
   
   2. app component: This is the nav bar component that dispaly the nav with the links like login, logout, register and so on. This component will direct to the certain component and also will block some of the comoponent if the user has no permission to enter certain component.
@@ -87,7 +90,28 @@ This assignment uses github, a git repository hosting service, to manage the pro
   
   7. channel component: This component is used for displaying all the channels inside a certain group. 
   
+  8. Create channel component: This component is used for displaying the create channel form. This has a channel name input textfield and a create button.
+  
+  9. create group component: This component will display a form that is used to create a group. This component has inputs like
+  group name, group assis,  members of the group and also the create button for this form.
+  
+  10. users component: this component will display all the users of this website.
+  
+  ### Services
+  
+  1. Data service: This service is used for creating functions which is used for a client and server to communicate to each other.
+  
+ # Node server architecture
+ 
+ This project has few files inside a server folder.
 
+  1. server.js: This is a main server file that listens to the server and also imports other module from different file.
+  
+  2. login.js: This is a module that exports file which contains a lot of function for the routes. This functions will be listened once the components call a function from a service then the service function will help to communicate with this functions. 
+  
+  3. data.json: This file is used for storing hard code 
+
+  
 
 # Assignment1
 
