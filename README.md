@@ -6,6 +6,34 @@
 ## Version Control
 This assignment uses github, a git repository hosting service, to manage the project. The repository name "angualr" was created for the assignment. Once I have done some of the part such as creating a login component, I have added and pushed to my repository. Bascically, I have pushed to my git repository once I have completed some components. This repository will contain REDME.md file to document about the proejct like data strucutre of a variable and also the overall description of the project.
 
+## Data Structure
+  There are two data strucutre for this project:
+  1. Users
+  
+    {"users": [
+    {
+      "username": "Super",
+      "birthday": "10/01/1990",
+      "email": "test1@test.com",
+      "password": "111",
+      "valid": "",
+      "type": "super",
+      "groups": ["group1", "group2", "test2"]
+    }
+    }
+  
+  2. groups
+  
+    {"groups": [
+      {
+        "group": "group1",
+        "groupAdmin": "test2",
+        "assis": "Super",
+        "members": ["Super", "test3"]
+      }
+    }
+
+
 ## Rest API 
  Front-end angular will coummuncate with node js server using routes. 
  
