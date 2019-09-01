@@ -109,8 +109,15 @@ This assignment uses github, a git repository hosting service, to manage the pro
   
   2. login.js: This is a module that exports file which contains a lot of function for the routes. This functions will be listened once the components call a function from a service then the service function will help to communicate with this functions. 
   
-  3. data.json: This file is used for storing hard code 
-
+  3. data.json: This file is used for storing hard code data such as users and groups. This file will be used in the login.js file. In the starting of a function, the login.js will read the file( data.json) and writes it back to the file whenever there is a change in the data such as adding group or user.
+  
+  # State Change
+  
+  ## Client: 
+  In the client side, Once the component is loaded it will display the html and css. while displaying the html and css, if html needs a data from a server, the client will use a function to communicate to the server by sending a request such as post or get method with a parameters. Once the server, sends the data back to the client side, the component will uses this data to display it. For example, if the component needs to display the all the groups, then once the component loads the client side will request to the server for the groups data and once the data has been retreived, the data will be used to display all the groups.
+    
+  ## server:
+   In the server, when a request has been made to a server, server uses the data (parameters) from the client and do what it needs to be done and resends the updated data back to the client side. For example, If the client wants to delete a group and wants to have a data without that particular group then the server will help to delete the group from the file (data.json) and sends the updated group back to the client side so that client can display the updated data.
   
 
 # Assignment1
