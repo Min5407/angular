@@ -19,7 +19,7 @@ export class ChannelsComponent implements OnInit {
     private elementRef: ElementRef,
     private router: Router,
     private dataservice: DataService
-  ) {}
+  ) { }
 
   profile;
   userChannels = [];
@@ -41,9 +41,11 @@ export class ChannelsComponent implements OnInit {
     this.groupAssis = sessionStorage.getItem("assis");
 
     this.dataservice.getChannels(this.groupName).subscribe(data => {
+      console.log(data);
       this.users = data.members;
 
       this.userChannels = data.channels;
+      console.log(this.userChannels)
     });
   }
   //change object into array
