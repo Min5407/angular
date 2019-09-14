@@ -1,29 +1,16 @@
 <!-- Card -->
-<a
-  *ngIf="profile.type == 'super' || profile.type == 'group'"
-  href="/groups/create"
->
-  Create Group</a
->
+<a *ngIf="profile.type == 'super' || profile.type == 'group'" href="/groups/create">
+  Create Group</a>
 <div id="grid">
   <div *ngFor="let group of groups">
-    <div
-      id="component"
-      *ngIf="
+    <div id="component" *ngIf="
         group.members.indexOf(profile.username) >= 0 || profile.type == 'super'
-      "
-      class="card promoting-card"
-    >
+      " class="card promoting-card">
       <!-- Card content -->
       <div class="card-body d-flex flex-row">
         <!-- Avatar -->
-        <img
-          src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg"
-          class="rounded-circle mr-3"
-          height="50px"
-          width="50px"
-          alt="avatar"
-        />
+        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg" class="rounded-circle mr-3" height="50px"
+          width="50px" alt="avatar" />
 
         <!-- Content -->
         <div>
@@ -36,60 +23,39 @@
 
       <!-- Card image -->
       <div class="view overlay">
-        <img
-          class="card-img-top rounded-0"
-          src="https://mdbootstrap.com/img/Photos/Horizontal/Food/full page/2.jpg"
-          width="100px"
-          height="100px"
-          alt="Card image cap"
-        />
+        <img class="card-img-top rounded-0" src="https://mdbootstrap.com/img/Photos/Horizontal/Food/full page/2.jpg"
+          width="100px" height="100px" alt="Card image cap" />
         <a href="#!">
           <div class="mask rgba-white-slight"></div>
         </a>
       </div>
-      <div
-        id="info"
-        *ngIf="
+      <div id="info" *ngIf="
           group.members.indexOf(profile.username) >= 0 ||
           profile.type == 'super'
-        "
-      >
+        ">
         <h3>users:</h3>
         <li *ngFor="let member of toArray(group.members)">
           {{ member }}
-          <button
-            *ngIf="profile.type == 'super' || profile.type == 'group'"
-            type="submit"
-            (click)="deleteMember(member, group.group)"
-          >
+          <button *ngIf="profile.type == 'super' || profile.type == 'group'" type="submit"
+            (click)="deleteMember(member, group.group)">
             Delete
           </button>
         </li>
-        <select
-          *ngIf="profile.type == 'super' || profile.type == 'group'"
-          name="inviteMember"
-          [(ngModel)]="inviteMember"
-        >
+        <select *ngIf="profile.type == 'super' || profile.type == 'group'" name="inviteMember"
+          [(ngModel)]="inviteMember">
           <option *ngFor="let user of users" value="{{ user.username }}">{{
             user.username
           }}</option>
         </select>
-        <button
-          id="invite"
-          *ngIf="profile.type == 'super' || profile.type == 'group'"
-          type="button"
-          (click)="invite(group.group, inviteMember)"
-        >
+        <button id="invite" *ngIf="profile.type == 'super' || profile.type == 'group'" type="button"
+          (click)="invite(group.group, inviteMember)">
           invite
         </button>
         <button type="button" (click)="viewChannel(group.assis, group.group)">
           View Channel
         </button>
-        <button
-          *ngIf="profile.type == 'super' || profile.type == 'group'"
-          type="submit"
-          (click)="deleteGroup(group.group)"
-        >
+        <button *ngIf="profile.type == 'super' || profile.type == 'group'" type="submit"
+          (click)="deleteGroup(group.group)">
           Delete
         </button>
       </div>

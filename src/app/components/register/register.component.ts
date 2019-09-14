@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private dataservice: DataService,
     private elementRef: ElementRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
@@ -43,7 +43,6 @@ export class RegisterComponent implements OnInit {
 
   // create User
   createUser() {
-    console.log(this.age, this.birthday);
     if (this.email === undefined || this.email == "") {
       alert("email must not be blank");
       return;
@@ -72,18 +71,26 @@ export class RegisterComponent implements OnInit {
           this.type
         )
         .subscribe(data => {
-          var dataJson = JSON.stringify(data);
-
-          if (data.valid === "emailFalse") {
-            alert("user email already exist, create new one");
-          } else if (data.valid === "usernameFalse") {
-            alert("user name already exist, create new one");
-          } else if (data.valid === "bothFalse") {
-            alert("Both user name and email already exist, create new one");
+          // var dataJson = JSON.stringify(data);
+          // console.log(data);
+          // if (data.valid === "emailFalse") {
+          //   alert("user email already exist, create new one");
+          // } else if (data.valid === "usernameFalse") {
+          //   alert("user name already exist, create new one");
+          // } else if (data.valid === "bothFalse") {
+          //   alert("Both user name and email already exist, create new one");
+          // } else {
+          //   // var dataJson = JSON.stringify(data);
+          //   this.router.navigateByUrl("/users");
+          // }
+          if (!data) {
+            alert("UserName Exist")
           } else {
-            var dataJson = JSON.stringify(data);
             this.router.navigateByUrl("/users");
+
           }
+
+
         });
     }
   }

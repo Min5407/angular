@@ -20,7 +20,7 @@ export class CreateGroupComponent implements OnInit {
     private router: Router,
     private dataservice: DataService,
     private elementRef: ElementRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
@@ -91,6 +91,7 @@ export class CreateGroupComponent implements OnInit {
           this.groupAdmin
         )
         .subscribe(data => {
+
           if (!data) {
             alert("Group name already exist, create new one");
           } else {

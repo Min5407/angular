@@ -11,7 +11,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 export class UsersComponent implements OnInit {
   users = [];
   updatedUsers = [];
-  email = "";
+  username = "";
   profile;
   userType;
 
@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
     private router: Router,
     private dataservice: DataService,
     private elementRef: ElementRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
@@ -50,17 +50,17 @@ export class UsersComponent implements OnInit {
         };
     }
   }
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   //delete user if clicked
-  deleteUser(email: string, type: string) {
-    console.log(type);
+  deleteUser(username: string, type: string) {
+
     if (type !== "super") {
-      this.dataservice.deleteUser(email).subscribe(data => {
+      this.dataservice.deleteUser(username).subscribe(data => {
         this.users = data;
       });
     } else {
-      alert("Dont Delelte Me");
+      alert("Super cannot be deleted");
     }
   }
 

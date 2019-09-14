@@ -11,16 +11,16 @@ import { HttpErrorResponse } from "@angular/common/http";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  email: "";
+  username: "";
   password: "";
 
-  constructor(private router: Router, private dataservice: DataService) {}
+  constructor(private router: Router, private dataservice: DataService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   // this function is for login
   itemClicked() {
-    this.dataservice.logIn(this.email, this.password).subscribe(data => {
+    this.dataservice.logIn(this.username, this.password).subscribe(data => {
       if (data.valid === true) {
         var dataJson = JSON.stringify(data);
         localStorage.setItem("user", dataJson);

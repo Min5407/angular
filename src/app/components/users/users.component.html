@@ -13,11 +13,7 @@
           <a href="/users"><i class="fa fa-linkedin"></i></a>
           <a href="/users"><i class="fa fa-facebook"></i></a>
         </div>
-        <button
-          *ngIf="userType"
-          type="submit"
-          (click)="deleteUser(user.email, user.type)"
-        >
+        <button *ngIf="userType" type="submit" (click)="deleteUser(user.username, user.type)">
           Delete
         </button>
         <button *ngIf="userType" type="button" (click)="giveSuper(user)">

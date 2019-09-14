@@ -1,4 +1,5 @@
 # 3813ICT Assignment1
+### gitHub: https://github.com/Min5407/angular
 
 ## About Assignment1 
  This project is about creating chat system using node js as a server and angualr framework as a front-end This project will contain login component, register component, user component and in real time chat with other groups and roles of each users.

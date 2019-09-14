@@ -19,7 +19,7 @@ export class DataService {
 
   backend = "http://localhost:3000";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // this function is used to send groupName from group component to channel component
   sendGroupName(group) {
@@ -32,9 +32,9 @@ export class DataService {
   }
 
   // this function is used for authentication
-  logIn(email: string, password: string) {
+  logIn(username: string, password: string) {
     return this.http.post<User>(this.backend + "/api/auth", {
-      email: email,
+      username: username,
       password: password
     });
   }
@@ -46,9 +46,9 @@ export class DataService {
   }
 
   // this function is used to delete users
-  deleteUser(email: string) {
+  deleteUser(username: string) {
     return this.http.post<any>(this.backend + "/api/delete", {
-      email: email
+      username: username
     });
   }
 
@@ -142,8 +142,6 @@ export class DataService {
 
   // give super type to a user
   giveSuper(user) {
-    return this.http.post<any>(this.backend + "/giveSuper", {
-      user: user
-    });
+    return this.http.post<any>(this.backend + "/giveSuper", user);
   }
 }
