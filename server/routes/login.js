@@ -1,35 +1,20 @@
 module.exports = function (db, app, path, ObjectID) {
-  var fs = require("fs");
   const collection = db.collection("data");
   const groupCollection = db.collection("groups");
 
 
   // gets certain group infomation
   app.post("/getChannels", (req, res) => {
-    // let data = fs.readFileSync("data.json", "utf8", function (err, data) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     return data;
-    //   }
-    // });
-    // data = JSON.parse(data);
+
 
     if (!req.body) {
       return res.sendStatus(400);
     }
-    console.log(req.body);
 
     groupCollection.find({ group: req.body.group }).toArray((err, data) => {
-      console.log(data);
       res.send(data[0]);
     })
-    // let groupIndex = data.groups
-    //   .map(group => {
-    //     return group.group;
-    //   })
-    //   .indexOf(req.body.group);
-    // res.send(data.groups[groupIndex]);
+
   });
 
   //get groups
@@ -136,19 +121,10 @@ module.exports = function (db, app, path, ObjectID) {
 
   //create channel in a group
   app.post("/createChannel", (req, res) => {
-    // let data = fs.readFileSync("data.json", "utf8", function (err, data) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     return data;
-    //   }
-    // });
-    // data = JSON.parse(data);
+
     groupCollection.find({ group: req.body.group }).toArray((err, data) => {
 
-      console.log("sdkufhow")
-      console.log(data[0].channels)
-      console.log("sdkufhow")
+
 
 
       if (data[0].channels == undefined) {
@@ -180,198 +156,106 @@ module.exports = function (db, app, path, ObjectID) {
     })
 
 
-
-    // let groupIndex = data.groups
-    //   .map(group => {
-    //     return group.group;
-    //   })
-    //   .indexOf(req.body.group);
-    // console.log(req.body.channel);
-    // console.log(req.body.group);
-
-    // let newChannel = {};
-    // newChannel.channel = req.body.channel;
-    // newChannel.members = [];
-    // if (data.groups[groupIndex].channels == undefined) {
-    //   data.groups[groupIndex].channels = [];
-    // }
-    // let channelName = data.groups[groupIndex].channels
-    //   .map(channel => {
-    //     return channel.channel;
-    //   })
-    //   .indexOf(req.body.channel);
-
-    // if (channelName == -1) {
-    //   data.groups[groupIndex].channels.push(newChannel);
-    //   res.send(true);
-    // } else {
-    //   res.send(false);
-    // }
-
-    // data = JSON.stringify(data);
-    // fs.writeFile("data.json", data, function (err, result) {
-    //   if (err) console.log("error", err);
-    // });
   });
 
   //delete channel
   app.post("/deleteChannel", (req, res) => {
-    let data = fs.readFileSync("data.json", "utf8", function (err, data) {
-      if (err) {
-        console.log(err);
-      } else {
-        return data;
-      }
-    });
-    data = JSON.parse(data);
+
 
     if (!req.body) {
       return res.sendStatus(400);
     }
 
-    console.log(req.body.channel, req.body.group);
 
-    let groupIndex = data.groups
-      .map(group => {
-        return group.group;
+    groupCollection.updateOne({ group: req.body.group }, { $pull: { channels: { channel: req.body.channel } } }, () => {
+      groupCollection.find({ group: req.body.group }).toArray((err, data) => {
+        res.send(data[0].channels);
       })
-      .indexOf(req.body.group);
-    console.log(data.groups[groupIndex].channels);
-    let channelIndex = data.groups[groupIndex].channels
-      .map(channel => {
-        return channel.channel;
-      })
-      .indexOf(req.body.channel);
-
-    data.groups[groupIndex].channels.splice(channelIndex, 1);
-
-    res.send(data.groups[groupIndex].channels);
-
-    data = JSON.stringify(data);
-    fs.writeFile("data.json", data, function (err, result) {
-      if (err) console.log("error", err);
     });
+
+
+
   });
 
   //delete channel member
   app.post("/channel/deleteMember", (req, res) => {
-    let data = fs.readFileSync("data.json", "utf8", function (err, data) {
-      if (err) {
-        console.log(err);
-      } else {
-        return data;
-      }
-    });
-    data = JSON.parse(data);
+
+
+    console.log(req.body)
+    console.log("--------------")
 
     if (!req.body) {
       return res.sendStatus(400);
     }
-    let groupIndex = data.groups
-      .map(group => {
-        return group.group;
+    groupCollection.find({ group: req.body.group }).toArray((err, data) => {
+
+      let channelIndex = data[0].channels
+        .map(channel => {
+          return channel.channel;
+        })
+        .indexOf(req.body.channel);
+
+      let memberIndex = data[0].channels[channelIndex].members
+        .map(member => {
+          return member;
+        })
+        .indexOf(req.body.member);
+
+      data[0].channels[channelIndex].members.splice(
+        memberIndex,
+        1
+      );
+      groupCollection.replaceOne({ group: req.body.group }, data[0], () => {
+        groupCollection.find({ group: req.body.group }).toArray((err, data) => {
+          res.send(data[0].channels)
+        })
       })
-      .indexOf(req.body.group);
 
-    let channelIndex = data.groups[groupIndex].channels
-      .map(channel => {
-        return channel.channel;
-      })
-      .indexOf(req.body.channel);
+    })
 
-    let memberIndex = data.groups[groupIndex].channels[channelIndex].members
-      .map(member => {
-        return member;
-      })
-      .indexOf(req.body.member);
 
-    data.groups[groupIndex].channels[channelIndex].members.splice(
-      memberIndex,
-      1
-    );
-    res.send(data.groups[groupIndex].channels);
-
-    data = JSON.stringify(data);
-    fs.writeFile("data.json", data, function (err, result) {
-      if (err) console.log("error", err);
-    });
   });
 
   //add channel member
   app.post("/channel/invite", (req, res) => {
-    let data = fs.readFileSync("data.json", "utf8", function (err, data) {
-      if (err) {
-        console.log(err);
-      } else {
-        return data;
-      }
-    });
-    data = JSON.parse(data);
+
 
     if (!req.body) {
       return res.sendStatus(400);
     }
 
-    console.log(req.body.channel, req.body.member, req.body.group);
 
-    let groupIndex = data.groups
-      .map(group => {
-        return group.group;
-      })
-      .indexOf(req.body.group);
 
-    let channelIndex = data.groups[groupIndex].channels
-      .map(channel => {
-        return channel.channel;
-      })
-      .indexOf(req.body.channel);
+    groupCollection.find({ group: req.body.group }).toArray((err, data) => {
+      let channelIndex = data[0].channels.map(channel => {
+        return channel.channel
+      }).indexOf(req.body.channel)
 
-    let check = data.groups[groupIndex].channels[channelIndex].members.includes(
-      req.body.member
-    );
-    if (!check) {
-      data.groups[groupIndex].channels[channelIndex].members.push(
-        req.body.member
-      );
-      res.send(data.groups[groupIndex].channels);
-    } else {
-      res.send(false);
-    }
+      let check = data[0].channels[channelIndex].members.includes(
+        req.body.member)
+      data[0].channels[channelIndex].members;
 
-    let userIndex = data.users
-      .map(user => {
-        console.log(user);
-        return user.username;
-      })
-      .indexOf(req.body.member);
 
-    if (data.users[userIndex].channels == undefined) {
-      data.users[userIndex].channels = [];
-    }
-    let userChannelIndex = data.users[userIndex].channels
-      .map(channel => {
-        return channel.group;
-      })
-      .indexOf(req.body.group);
 
-    if (userChannelIndex == -1) {
-      let newChannel = {};
-      newChannel.group = req.body.group;
-      newChannel.groupChannels = [];
-      newChannel.groupChannels.push(req.body.channel);
-      data.users[userIndex].channels.push(newChannel);
-    } else {
-      let newChannel = {};
-      newChannel.group = req.body.group;
-      newChannel.groupChannels = [];
-      newChannel.groupChannels.push(req.body.channel);
-      data.users[userIndex].channels.push(newChannel);
-    }
 
-    data = JSON.stringify(data);
-    fs.writeFile("data.json", data, function (err, result) {
-      if (err) console.log("error", err);
-    });
+      if (!check) {
+        data[0].channels[channelIndex].members.push(req.body.member);
+
+        groupCollection.replaceOne({ group: req.body.group }, data[0], () => {
+          groupCollection.find({ group: req.body.group }).toArray((err, data) => {
+            res.send(data[0].channels)
+          })
+        })
+
+      } else {
+
+        res.send(false);
+      }
+
+
+    })
+
+
   });
 
   //give super type to a user
@@ -494,14 +378,20 @@ module.exports = function (db, app, path, ObjectID) {
 
 
     collection.find({ username: req.body.username }).toArray((err, data) => {
+      console.log("aosdiufw")
       console.log(data[0])
       if (data[0] == undefined) {
         res.send(false);
-      } else {
-        data[0].valid = true
-        console.log(data[0]);
-        res.send(data[0])
+
       }
+      else if (data[0].password == req.body.password) {
+        data[0].valid = true
+        res.send(data[0])
+
+      } else {
+        res.send(false);
+      }
+
 
 
 
