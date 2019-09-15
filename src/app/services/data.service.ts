@@ -1,6 +1,8 @@
 import { Injectable, Component, EventEmitter } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import * as io from 'socket.io-client';
+
 
 interface User {
   email: string;
@@ -20,6 +22,68 @@ export class DataService {
   backend = "http://localhost:3000";
 
   constructor(private http: HttpClient) { }
+
+  private socket = io(this.backend);
+
+
+  public send(data): void {
+    this.socket.emit("message", data);
+  }
+  public onMessage(): Observable<any> {
+    let observable = new Observable(observer => {
+      this.socket.on("message", (data: string) => observer.next(data));
+    });
+    return observable;
+  }
+
+  initSocket(): void {
+    this.socket = io(this.backend);
+  }
+
+
+  joinChat(data) {
+    this.socket.emit("join", data);
+  }
+
+
+  // joinedChat() {
+  //   let observable = new Observable(observer => {
+  //     this.socket.on("joined", (data) => {
+  //       observer.next(data)
+  //     });
+  //     return () => { this.socket.disconnect(); }
+
+  //   })
+  //   return observable;
+  // }
+  // sendMessage(data) {
+  //   this.socket.emit("message", data);
+  // }
+
+  // messageReceived() {
+  //   let observable = new Observable(observer => {
+  //     this.socket.on("newMessage", (data) => {
+  //       console.log("hihiisss")
+  //       observer.next(data);
+  //     });
+  //     return () => {
+  //       this.socket.disconnect();
+  //     }
+  //   })
+  //   return observable;
+  // }
+
+
+
+
+
+  //get channel users
+  getChannelUsers(channel) {
+    return this.http.post<any>(this.backend + "/channelUsers", channel)
+  }
+
+
+
 
   // this function is used to send groupName from group component to channel component
   sendGroupName(group) {

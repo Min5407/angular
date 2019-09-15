@@ -1,15 +1,72 @@
-<div>
-  <p>Text Me Something!</p>
-  <body>
-    <div class="col-sm-3 col-sm-offset-4 frame">
-      <ul></ul>
-      <div>
-        <div class="msj-rta macro" style="margin:auto">
-          <div class="text text-r" style="background:whitesmoke !important">
-            <input class="mytext" placeholder="Type a message" />
-          </div>
+<div id="rightCorner">
+
+  <!-- invite section -->
+  <div *ngIf="
+        profile.type == 'super' ||
+        profile.type == 'group' ||
+        profile.username == groupAssis
+      ">
+    {{ valid }}
+
+
+
+    <select [(ngModel)]="selectUser" name="selectUser">
+      <option *ngFor="let user of users" value="{{ user }}">{{ user }}</option>
+    </select>
+    <button (click)="addMember()">Invite</button>
+  </div>
+</div>
+<div id="box" class="detailBox">
+  <div class="titleBox">
+    <label>Chat Box</label>
+    <button type="button" class="close" aria-hidden="true">&times;</button>
+  </div>
+
+  <div class="actionBox">
+    <ul class="commentList">
+
+      <li *ngFor="let message of messages">{{message.member}}: {{ message.message }}</li>
+      <!-- <li *ngFor="let message of messages">
+        {{message.member}}
+        <div class="commenterImage">
+          <img src=message.image />
+
+
         </div>
+        <div class="commentText">
+          <span>{{message.member}}</span>
+          <p class="">{{message.message}}</p> <span class="date sub-text">on March 5th, 2014</span>
+
+        </div>
+      </li>
+      <li>
+        {{message}}
+      </li> -->
+      <li>
+        <div class="commenterImage">
+          <img src="http://placekitten.com/50/50" />
+
+
+
+        </div>
+        <div class="commentText">
+          <span>Min:</span>
+          <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+        </div>
+      </li>
+
+
+
+    </ul>
+    <form class="form-inline" role="form">
+      <div class="form-group">
+        <input class="form-control" type="text" [(ngModel)]="messageText" name="messageText"
+          placeholder="Your comments" />
       </div>
-    </div>
-  </body>
+      <div class="form-group">
+        <button id="button" class="btn btn-default" (click)="sendMessage(messageText)"> Add</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -3,6 +3,10 @@ module.exports = function (db, app, path, ObjectID) {
   const groupCollection = db.collection("groups");
 
 
+
+
+
+
   // gets certain group infomation
   app.post("/getChannels", (req, res) => {
 
@@ -24,7 +28,6 @@ module.exports = function (db, app, path, ObjectID) {
       res.send(data);
     })
     collection.find().toArray((err, data) => {
-      console.log("helweeeeeee")
       console.log(data);
     })
 
@@ -41,6 +44,18 @@ module.exports = function (db, app, path, ObjectID) {
     })
 
   });
+  //get channel users
+  app.post("/channelUsers", (req, res) => {
+
+    groupCollection.find({ group: req.body.group }).toArray((err, data) => {
+
+      let channelIndex = data[0].channels.map(channel => {
+        return channel.channel
+      }).indexOf(req.body.channel)
+      let channelUsers = data[0].channels[channelIndex].members;
+      res.send(channelUsers);
+    })
+  })
 
   //create user
   app.post("/api/register", (req, res) => {

@@ -1,26 +1,10 @@
 <!-- Card -->
 <div id="rightCorner">
   <a *ngIf="
-      profile.type == 'super' ||
-      profile.type == 'group' ||
-      profile.username == groupAssis
-    " href="groups/channels/createChannel">Create Channel</a>
-  <!-- invite section -->
-  <div *ngIf="
-      profile.type == 'super' ||
-      profile.type == 'group' ||
-      profile.username == groupAssis
-    ">
-    {{ valid }}
-    <select [(ngModel)]="selectChannel" name="selectChannel">
-      <option *ngFor="let channel of userChannels" value="{{ channel.channel }}">{{ channel.channel }}</option>
-    </select>
-
-    <select [(ngModel)]="selectUser" name="selectUser">
-      <option *ngFor="let user of users" value="{{ user }}">{{ user }}</option>
-    </select>
-    <button (click)="addMember()">Invite</button>
-  </div>
+          profile.type == 'super' ||
+          profile.type == 'group' ||
+          profile.username == groupAssis
+        " href="groups/channels/createChannel">Create Channel</a>
 </div>
 
 <!-- card section -->
@@ -78,7 +62,7 @@
             Delete Channel
           </button>
 
-          <button type="button" (click)="viewChat(member)">Chat</button>
+          <button type="button" (click)="viewChat(userChannel.channel)">Chat</button>
         </div>
       </div>
       <br />
