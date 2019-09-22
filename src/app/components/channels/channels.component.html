@@ -5,6 +5,24 @@
           profile.type == 'group' ||
           profile.username == groupAssis
         " href="groups/channels/createChannel">Create Channel</a>
+
+  <div *ngIf="
+        profile.type == 'super' ||
+        profile.type == 'group' ||
+        profile.username == groupAssis
+      ">
+    {{ valid }}
+    <select [(ngModel)]="selectChannel" name="selectChannel">
+      <option *ngFor="let channel of userChannels" value="{{ channel.channel }}">{{ channel.channel }}</option>
+    </select>
+
+
+
+    <select [(ngModel)]="selectUser" name="selectUser">
+      <option *ngFor="let user of users" value="{{ user }}">{{ user }}</option>
+    </select>
+    <button (click)="addMember()">Invite</button>
+  </div>
 </div>
 
 <!-- card section -->

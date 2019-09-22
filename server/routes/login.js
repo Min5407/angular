@@ -3,10 +3,6 @@ module.exports = function (db, app, path, ObjectID) {
   const groupCollection = db.collection("groups");
 
 
-
-
-
-
   // gets certain group infomation
   app.post("/getChannels", (req, res) => {
 

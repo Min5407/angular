@@ -57,10 +57,40 @@ export class ChannelsComponent implements OnInit {
     let chat = { group: currentGroup, channel: channel }
     var dataJson = JSON.stringify(chat);
     sessionStorage.setItem("chat", dataJson);
+    console.log(this.profile.username + "dd");
+    this.dataservice.joinChat({ member: this.profile.username, channel: channel, group: currentGroup })
     this.router.navigateByUrl("groups/channels/chat");
   }
 
+  addMember() {
 
+
+    if (this.selectChannel == undefined) {
+      alert("Choose the channel");
+    } else if (this.selectUser == undefined) {
+      alert("choose the member");
+    } else {
+
+      this.dataservice
+        .channelInvite(this.groupName, this.selectChannel, this.selectUser)
+        .subscribe(data => {
+
+          if (!data) {
+            alert("user already exstis");
+          } else {
+            this.userChannels = data;
+
+          }
+          // else {
+          //   this.dataservice.joinChat({ member: this.selectUser, channel: this.selectChannel })
+
+          // }
+        });
+
+
+
+    }
+  }
   //delete  channel
   deleteChannel(channel) {
     this.dataservice.deleteChannel(this.groupName, channel).subscribe(data => {

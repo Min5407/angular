@@ -29,9 +29,11 @@ export class DataService {
   public send(data): void {
     this.socket.emit("message", data);
   }
+
   public onMessage(): Observable<any> {
     let observable = new Observable(observer => {
-      this.socket.on("message", (data: string) => observer.next(data));
+      this.socket.on("message", (data) => observer.next(data)
+      );
     });
     return observable;
   }
@@ -41,21 +43,19 @@ export class DataService {
   }
 
 
-  joinChat(data) {
+  public joinChat(data): void {
     this.socket.emit("join", data);
   }
 
 
-  // joinedChat() {
-  //   let observable = new Observable(observer => {
-  //     this.socket.on("joined", (data) => {
-  //       observer.next(data)
-  //     });
-  //     return () => { this.socket.disconnect(); }
-
-  //   })
-  //   return observable;
-  // }
+  public joinedChat(): Observable<any> {
+    let observable = new Observable(observer => {
+      this.socket.on("joined", (data) => {
+        observer.next(data)
+      });
+    })
+    return observable;
+  }
   // sendMessage(data) {
   //   this.socket.emit("message", data);
   // }

@@ -21,20 +21,14 @@ export class ChatComponent implements OnInit {
   messageText: string;
   messages = [];
   ioConnection: any;
+  joinedConnection: any;
   constructor(private dataservice: DataService) {
-    // this.dataservice.joinedChat().subscribe(data => {
-    //   console.log(data);
-    //   this.message = "hi";
-    //   this.messages.push(data);
-    // })
-    // this.dataservice.initSocket();
-    // this.dataservice.messageReceived().subscribe(data => {
-    //   this.messages = data;
-    // })
+    // this.joinToConnection();
   }
 
   ngOnInit() {
 
+    // this.initToConnection();
 
 
     this.profile = JSON.parse(sessionStorage.getItem("user"));
@@ -54,64 +48,90 @@ export class ChatComponent implements OnInit {
         this.channelUsers = data
       })
     })
-
-
-    // this.dataservice.joinedChat().subscribe(data => {
-    //   this.messages.push(data);
-    //   console.log(this.messages)
-    // });
-
-
+    // this.joinToConnection();
     this.initToConnection();
+
+
+
+
+
   }
 
+  // private joinToConnection() {
+  //   this.dataservice.initSocket();
+  //   this.ioConnection = this.dataservice.joinedChat().subscribe((data) => {
+  //     this.messages = data;
+  //     console.log(this.messages);
+  //     console.log("joined");
+
+  //   })
+  // }
   private initToConnection() {
-    this.dataservice.initSocket();
+    // this.dataservice.initSocket();
+    this.joinedConnection = this.dataservice.joinedChat().subscribe((data) => {
+      this.messages = data;
+      console.log(this.messages);
+      console.log("joined");
+
+    })
     this.ioConnection = this.dataservice
       .onMessage()
       .subscribe((data) => {
-        this.messages.push(data);
+        this.messages = data;
+        console.log(data);
+        // console.log("send")
       });
   }
+  // private joined() {
+  //   console.log("jo");
+  //   this.dataservice.initSocket();
+  //   this.ioConnection = this.dataservice
+  //     .joinedChat()
+  //     .subscribe((data) => {
+  //       this.messages.push(data);
+  //       console.log(data);
+  //       console.log("data");
+  //     });
+  // }
+
+
 
   //checks and add member to the channel after receiving data from the server
 
   sendMessage() {
     // this.dataservice.sendMessage({ channel: this.selectChannel, member: this.profile.username, message: this.messageText });
     if (this.messageText) {
-      this.dataservice.send({ message: this.messageText, member: this.profile.username });
+      this.dataservice.send({ message: this.messageText, member: this.profile.username, channel: this.selectChannel, group: this.groupName });
       this.messageText = null;
     } else {
       console.log("no message");
     }
   }
 
-  addMember() {
+  // addMember() {
 
-    // let Mdata = { group: this.groupName, channel: this.selectChannel, member: this.selectUser, }
-    // console.log(Mdata);
-    // this.dataservice.joinChat(Mdata)
-    if (this.selectChannel == undefined) {
-      alert("Choose the channel");
-    } else if (this.selectUser == undefined) {
-      alert("choose the member");
-    } else {
 
-      this.dataservice
-        .channelInvite(this.groupName, this.selectChannel, this.selectUser)
-        .subscribe(data => {
+  //   if (this.selectChannel == undefined) {
+  //     alert("Choose the channel");
+  //   } else if (this.selectUser == undefined) {
+  //     alert("choose the member");
+  //   } else {
 
-          if (!data) {
-            alert("user already exstis");
-          } else {
-            let Mdata = { group: this.groupName, channel: this.selectChannel, member: this.selectUser, }
-            this.dataservice.joinChat(Mdata)
-            this.userChannels = data;
-          }
-        });
+  //     this.dataservice
+  //       .channelInvite(this.groupName, this.selectChannel, this.selectUser)
+  //       .subscribe(data => {
+
+  //         if (!data) {
+  //           alert("user already exstis");
+  //         }
+  //         // else {
+  //         //   this.dataservice.joinChat({ member: this.selectUser, channel: this.selectChannel })
+
+  //         // }
+  //       });
 
 
 
-    }
-  }
+  //   }
+  // }
 }
