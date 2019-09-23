@@ -25,6 +25,17 @@ export class DataService {
 
   private socket = io(this.backend);
 
+  public leave(data): void {
+    this.socket.emit("leave", data);
+  }
+
+  public left(): Observable<any> {
+    let observable = new Observable(observer => {
+      this.socket.on("left", (data) => observer.next(data)
+      );
+    });
+    return observable;
+  }
 
   public send(data): void {
     this.socket.emit("message", data);

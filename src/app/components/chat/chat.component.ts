@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { DataService } from "../../services/data.service";
+import { Route, Router, Data } from "@angular/router";
 
 @Component({
   selector: "app-chat",
@@ -22,7 +23,7 @@ export class ChatComponent implements OnInit {
   messages = [];
   ioConnection: any;
   joinedConnection: any;
-  constructor(private dataservice: DataService) {
+  constructor(private dataservice: DataService, private router: Router, ) {
     // this.joinToConnection();
   }
 
@@ -81,6 +82,10 @@ export class ChatComponent implements OnInit {
         console.log(data);
         // console.log("send")
       });
+
+    this.ioConnection = this.dataservice.left().subscribe((data) => {
+      this.messages = data;
+    })
   }
   // private joined() {
   //   console.log("jo");
@@ -97,7 +102,12 @@ export class ChatComponent implements OnInit {
 
 
   //checks and add member to the channel after receiving data from the server
+  leaveChat() {
+    this.dataservice.leave({ member: this.profile.username, channel: this.selectChannel, group: this.groupName });
+    this.router.navigateByUrl("groups/channels");
 
+
+  }
   sendMessage() {
     // this.dataservice.sendMessage({ channel: this.selectChannel, member: this.profile.username, message: this.messageText });
     if (this.messageText) {
