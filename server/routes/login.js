@@ -1,6 +1,18 @@
-module.exports = function (db, app, path, ObjectID) {
+module.exports = function (db, app, path, ObjectID, formidable) {
   const collection = db.collection("data");
   const groupCollection = db.collection("groups");
+
+  //  image upload
+  app.post('/api/upload', (req, res) => {
+    var form = new formidable.IncomingForm({ uploadDir: './userImages' })
+    form.keepExtenstions = true;
+
+    form.on('fileBegin', (name, file) => {
+      file.path = form.uploadDir + "/" + file.name;
+    })
+    form.parse(req);
+  })
+
 
 
   // gets certain group infomation
@@ -61,15 +73,15 @@ module.exports = function (db, app, path, ObjectID) {
       return res.sendStatus(400);
     }
     let newUser = {};
-
+    console.log(req.body.imageName)
     newUser.email = req.body.email;
     newUser.password = req.body.password;
     newUser.username = req.body.username;
     newUser.birthday = req.body.birthday;
     newUser.type = req.body.type;
+    newUser.imageName = req.body.imageName;
     newUser.valid = "";
     newUser.groups = [];
-
     collection.find({ username: newUser.username }).count((err, count) => {
       if (count == 0) {
         collection.insertOne(newUser, (err, dbres) => {
@@ -79,7 +91,6 @@ module.exports = function (db, app, path, ObjectID) {
         })
       } else {
         res.send(false);
-        console.log("same");
       }
     })
 
@@ -112,7 +123,6 @@ module.exports = function (db, app, path, ObjectID) {
             collection.updateOne({ username: member }, { $push: { groups: req.body.group } })
           })
 
-          console.log("add");
           groupCollection.find().toArray((err, data) => {
             console.log(data);
           })

@@ -1,7 +1,7 @@
 <div id="component">
   <ul id="grid">
     <li *ngFor="let user of users">
-      <img src="assets/user.jpg" width="100px" height="" alt="user" />
+      <img src="http://localhost:3000/images/{{user.imageName}}" width="100px" height="" alt="user" />
       <div id="info">
         <h2>{{ user.username }}</h2>
 

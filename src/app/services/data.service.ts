@@ -25,6 +25,9 @@ export class DataService {
 
   private socket = io(this.backend);
 
+  imgUpload(fd) {
+    return this.http.post<any>(this.backend + '/api/upload', fd)
+  }
   public leave(data): void {
     this.socket.emit("leave", data);
   }
@@ -188,14 +191,16 @@ export class DataService {
     password: string,
     username: string,
     birthday: Date,
-    type: string
+    type: string,
+    imageName: string
   ) {
     return this.http.post<any>(this.backend + "/api/register", {
       email: email,
       password: password,
       username: username,
       birthday: birthday,
-      type: type
+      type: type,
+      imageName: imageName
     });
   }
   //this function is used to delete member from a channel

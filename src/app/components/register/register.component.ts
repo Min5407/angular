@@ -17,8 +17,10 @@ export class RegisterComponent implements OnInit {
   super = false;
   type: "";
   valid: boolean;
-
+  selectedFile = null;
   profile;
+  imagePath = "";
+  imageName: string;
 
   constructor(
     private router: Router,
@@ -40,7 +42,19 @@ export class RegisterComponent implements OnInit {
       this.router.navigateByUrl("/account");
     }
   }
-
+  onUpload() {
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
+    console.log(fd)
+    this.dataservice.imgUpload(fd).subscribe(res => {
+      this.imagePath = res.data.filename;
+      console.log(res.data.filename + " " + res.data.size)
+    })
+  }
+  onFileSelected(event) {
+    this.imageName = event.target.files[0].name;
+    this.selectedFile = event.target.files[0];
+  }
   // create User
   createUser() {
     if (this.email === undefined || this.email == "") {
@@ -68,9 +82,11 @@ export class RegisterComponent implements OnInit {
           this.password,
           this.userName,
           this.birthday,
-          this.type
+          this.type,
+          this.imageName
         )
         .subscribe(data => {
+          // console.log(data);
           // var dataJson = JSON.stringify(data);
           // console.log(data);
           // if (data.valid === "emailFalse") {
@@ -86,6 +102,8 @@ export class RegisterComponent implements OnInit {
           if (!data) {
             alert("UserName Exist")
           } else {
+
+
             this.router.navigateByUrl("/users");
 
           }

@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+var formidable = require("formidable");
 var path = require("path");
 var cors = require("cors");
 var http = require("http").Server(app);
@@ -12,6 +13,7 @@ var fs = require("fs");
 
 var bodyParser = require("body-parser");
 const url = "mongodb://localhost:27017";
+app.use('/images', express.static(path.join(__dirname, './userImages')))
 app.use(bodyParser.json());
 app.use(cors());
 // app.use(express.static(path.join(__dirname, "../dist/assignment1")));
@@ -24,7 +26,7 @@ MongoClient.connect(url, { poolSize: 10, useNewUrlParser: true, useUnifiedTopolo
   const db = client.db(dbName);
   sockets.connect(app, io, db);
   require("./listen.js")(http);
-  require("./routes/login.js")(db, app, path, ObjectID);
+  require("./routes/login.js")(db, app, path, ObjectID, formidable);
 
 
 })

@@ -4,32 +4,17 @@
     <div class="imgcontainer"></div>
     <div class="form-group">
       <p>Email</p>
-      <input
-        type="email"
-        class="form-control"
-        [(ngModel)]="email"
-        name="email"
-      />
+      <input type="email" class="form-control" [(ngModel)]="email" name="email" />
     </div>
     <div class="form-group">
       <p>UserName</p>
 
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="userName"
-        name="userName"
-      />
+      <input type="text" class="form-control" [(ngModel)]="userName" name="userName" />
     </div>
     <div class="form-group">
       <p>Password</p>
 
-      <input
-        type="password"
-        class="form-control"
-        [(ngModel)]="password"
-        name="password"
-      />
+      <input type="password" class="form-control" [(ngModel)]="password" name="password" />
     </div>
     <div id="type">
       <p>Type</p>
@@ -42,21 +27,16 @@
     <div class="form-group">
       <p>Birthday</p>
 
-      <input
-        type="date"
-        placeholder="00/00/0000"
-        class="form-control"
-        [(ngModel)]="birthday"
-        name="birthday"
-      />
+      <input type="date" placeholder="00/00/0000" class="form-control" [(ngModel)]="birthday" name="birthday" />
+    </div>
+    <div class="form-group">
+      <p>Upload Profile Image:</p>
+
+      <input type="file" (change)="onFileSelected($event)" name="uploadFile" />
     </div>
 
     <div id="creatBtn" class="form-group">
-      <button
-        type="submit"
-        class="btn btn-primary btn-block"
-        (click)="createUser()"
-      >
+      <button type="submit" class="btn btn-primary btn-block" (click)="createUser()" (click)="onUpload()">
         Create
       </button>
     </div>

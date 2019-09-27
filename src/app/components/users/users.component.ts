@@ -44,6 +44,7 @@ export class UsersComponent implements OnInit {
 
       this.dataservice.getUsers().subscribe(data => {
         this.users = data;
+        console.log(this.users)
       }),
         (error: HttpErrorResponse) => {
           alert("Error");
