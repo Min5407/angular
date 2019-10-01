@@ -5,9 +5,12 @@ module.exports = {
       var messages = [];
       let valid = false;
       let leftValid = false;
+
+      // connect with socekt
       io.on("connection", (socket) => {
          console.log("new connection")
 
+         // get message from the client side and save it in the database
          socket.on("message", data => {
 
             socket.join(data.channel);
@@ -24,6 +27,8 @@ module.exports = {
                   groupCollection.find({ group: data.group }).toArray((err, newGroup) => {
                      console.log("--0---")
                      console.log(newGroup[0].channels[channelIndex].messages)
+
+                     //send data back to client side
                      io.to(data.channel).emit("message", newGroup[0].channels[channelIndex].messages);
 
                   })
@@ -34,6 +39,7 @@ module.exports = {
          });
 
 
+         // gets data when user leaves from client side and saves the data to the database
          socket.on("leave", data => {
 
             socket.leave(data.channel)
@@ -59,6 +65,8 @@ module.exports = {
                groupCollection.replaceOne({ group: data.group }, group[0], () => {
                   groupCollection.find({ group: data.group }).toArray((err, newGroup) => {
                      console.log(newGroup[0].channels[channelIndex].messages);
+
+                     //send the left message and data back to client side
                      io.to(data.channel).emit("left", newGroup[0].channels[channelIndex].messages);
 
                   })
@@ -67,6 +75,7 @@ module.exports = {
             })
          })
 
+         //gets data from client side when user joins the chat and saves the data in the database
          socket.on("join", data => {
 
 
@@ -102,6 +111,8 @@ module.exports = {
                groupCollection.replaceOne({ group: data.group }, group[0], () => {
                   groupCollection.find({ group: data.group }).toArray((err, newGroup) => {
                      console.log(newGroup[0].channels[channelIndex].messages);
+
+                     //sends data back to the client side
                      io.to(data.channel).emit("joined", newGroup[0].channels[channelIndex].messages);
 
                   })

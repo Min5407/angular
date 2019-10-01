@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { DataService } from "../../services/data.service";
 import { Route, Router, Data } from "@angular/router";
 
@@ -27,6 +27,8 @@ export class ChatComponent implements OnInit {
   imagePath = "";
   imageName: string;
   selectedFile = null;
+  uploadValid: boolean;
+  @ViewChild('mydiv', { static: false }) myDiv: ElementRef;
 
 
 
@@ -65,15 +67,9 @@ export class ChatComponent implements OnInit {
 
   }
 
-  // private joinToConnection() {
-  //   this.dataservice.initSocket();
-  //   this.ioConnection = this.dataservice.joinedChat().subscribe((data) => {
-  //     this.messages = data;
-  //     console.log(this.messages);
-  //     console.log("joined");
 
-  //   })
-  // }
+
+  //gets the data back from server side whenever they leave or send message to the server side
   private initToConnection() {
     // this.dataservice.initSocket();
     this.joinedConnection = this.dataservice.joinedChat().subscribe((data) => {
@@ -114,6 +110,7 @@ export class ChatComponent implements OnInit {
 
 
   }
+  //upload the image file 
   onUpload() {
     const fd = new FormData();
     fd.append('image', this.selectedFile, this.selectedFile.name);
@@ -122,13 +119,27 @@ export class ChatComponent implements OnInit {
       this.imagePath = res.data.filename;
       console.log(res.data.filename + " " + res.data.size)
     })
+    // console.log(this.myDiv.nativeElement.innerHTML);
+
+
+
+
   }
 
+  //selects the image 
   onFileSelected(event) {
+
     this.imageName = event.target.files[0].name;
     this.selectedFile = event.target.files[0];
+    // event.target.value = null
+    // Added this
+
+
+
+
   }
 
+  //sends the message to the server side
   sendMessage() {
     // this.dataservice.sendMessage({ channel: this.selectChannel, member: this.profile.username, message: this.messageText });
     if (this.messageText || this.imageName) {
@@ -139,30 +150,5 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  // addMember() {
 
-
-  //   if (this.selectChannel == undefined) {
-  //     alert("Choose the channel");
-  //   } else if (this.selectUser == undefined) {
-  //     alert("choose the member");
-  //   } else {
-
-  //     this.dataservice
-  //       .channelInvite(this.groupName, this.selectChannel, this.selectUser)
-  //       .subscribe(data => {
-
-  //         if (!data) {
-  //           alert("user already exstis");
-  //         }
-  //         // else {
-  //         //   this.dataservice.joinChat({ member: this.selectUser, channel: this.selectChannel })
-
-  //         // }
-  //       });
-
-
-
-  //   }
-  // }
 }

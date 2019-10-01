@@ -36,7 +36,6 @@ module.exports = function (db, app, path, ObjectID, formidable) {
       res.send(data);
     })
     collection.find().toArray((err, data) => {
-      console.log(data);
     })
 
   });
@@ -68,12 +67,10 @@ module.exports = function (db, app, path, ObjectID, formidable) {
   //create user
   app.post("/api/register", (req, res) => {
 
-
     if (!req.body) {
       return res.sendStatus(400);
     }
     let newUser = {};
-    console.log(req.body.imageName)
     newUser.email = req.body.email;
     newUser.password = req.body.password;
     newUser.username = req.body.username;
@@ -86,7 +83,6 @@ module.exports = function (db, app, path, ObjectID, formidable) {
       if (count == 0) {
         collection.insertOne(newUser, (err, dbres) => {
           if (err) throw err;
-          // console.log(dbres);
           res.send(dbres);
         })
       } else {
@@ -124,10 +120,8 @@ module.exports = function (db, app, path, ObjectID, formidable) {
           })
 
           groupCollection.find().toArray((err, data) => {
-            console.log(data);
           })
           collection.find().toArray((err, data) => {
-            console.log(data);
           })
           res.send(true);
         })
@@ -149,7 +143,6 @@ module.exports = function (db, app, path, ObjectID, formidable) {
 
 
       if (data[0].channels == undefined) {
-        console.log("undefined1")
         groupCollection.updateOne({ group: req.body.group }, { $push: { channels: { channel: req.body.channel, members: [] } } }, () => {
           res.send(true);
         })
@@ -182,7 +175,6 @@ module.exports = function (db, app, path, ObjectID, formidable) {
   //delete channel
   app.post("/deleteChannel", (req, res) => {
 
-
     if (!req.body) {
       return res.sendStatus(400);
     }
@@ -191,6 +183,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
     groupCollection.updateOne({ group: req.body.group }, { $pull: { channels: { channel: req.body.channel } } }, () => {
       groupCollection.find({ group: req.body.group }).toArray((err, data) => {
         res.send(data[0].channels);
+        console.log(req.body);
       })
     });
 
@@ -240,6 +233,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
   //add channel member
   app.post("/channel/invite", (req, res) => {
 
+    console.log(req.body)
 
     if (!req.body) {
       return res.sendStatus(400);
@@ -282,6 +276,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
   //give super type to a user
   app.post("/giveSuper", (req, res) => {
 
+    console.log(req.body)
 
     if (!req.body) {
       return res.sendStatus(400);
@@ -300,7 +295,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
   });
   //delete channel member
   app.post("/group/deleteMember", (req, res) => {
-
+    console.log(req.body)
 
     if (!req.body) {
       return res.sendStatus(400);
@@ -334,7 +329,6 @@ module.exports = function (db, app, path, ObjectID, formidable) {
     if (!req.body) {
       return res.sendStatus(400);
     }
-    console.log(req.body.username);
     collection.deleteOne({ username: req.body.username }, (err, doc) => {
       collection.find().toArray((err, data) => {
         res.send(data);
@@ -349,6 +343,10 @@ module.exports = function (db, app, path, ObjectID, formidable) {
     if (!req.body) {
       return res.sendStatus(400);
     }
+    console.log("-----")
+
+    console.log(req.body)
+    console.log("-----")
 
     groupCollection.deleteOne({ group: req.body.group }, () => {
       collection.updateMany({}, { $pull: { groups: req.body.group } }, () => {
@@ -366,7 +364,6 @@ module.exports = function (db, app, path, ObjectID, formidable) {
 
   //add group member
   app.post("/groups/group/invite", (req, res) => {
-
 
     if (!req.body) {
       return res.sendStatus(400);
@@ -397,10 +394,8 @@ module.exports = function (db, app, path, ObjectID, formidable) {
       return res.sendStatus(400);
     }
 
-
     collection.find({ username: req.body.username }).toArray((err, data) => {
-      console.log("aosdiufw")
-      console.log(data[0])
+
       if (data[0] == undefined) {
         res.send(false);
 
