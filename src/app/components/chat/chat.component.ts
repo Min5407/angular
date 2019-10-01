@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
   users;
   groupName;
   groupAssis;
+
   valid;
 
   chat;
@@ -23,6 +24,12 @@ export class ChatComponent implements OnInit {
   messages = [];
   ioConnection: any;
   joinedConnection: any;
+  imagePath = "";
+  imageName: string;
+  selectedFile = null;
+
+
+
   constructor(private dataservice: DataService, private router: Router, ) {
     // this.joinToConnection();
   }
@@ -72,15 +79,14 @@ export class ChatComponent implements OnInit {
     this.joinedConnection = this.dataservice.joinedChat().subscribe((data) => {
       this.messages = data;
       console.log(this.messages);
-      console.log("joined");
 
     })
     this.ioConnection = this.dataservice
       .onMessage()
       .subscribe((data) => {
         this.messages = data;
-        console.log(data);
-        // console.log("send")
+
+
       });
 
     this.ioConnection = this.dataservice.left().subscribe((data) => {
@@ -103,15 +109,30 @@ export class ChatComponent implements OnInit {
 
   //checks and add member to the channel after receiving data from the server
   leaveChat() {
-    this.dataservice.leave({ member: this.profile.username, channel: this.selectChannel, group: this.groupName });
+    this.dataservice.leave({ member: this.profile.username, channel: this.selectChannel, group: this.groupName, image: this.profile.imageName });
     this.router.navigateByUrl("groups/channels");
 
 
   }
+  onUpload() {
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
+    this.dataservice.imgUpload(fd).subscribe(res => {
+
+      this.imagePath = res.data.filename;
+      console.log(res.data.filename + " " + res.data.size)
+    })
+  }
+
+  onFileSelected(event) {
+    this.imageName = event.target.files[0].name;
+    this.selectedFile = event.target.files[0];
+  }
+
   sendMessage() {
     // this.dataservice.sendMessage({ channel: this.selectChannel, member: this.profile.username, message: this.messageText });
-    if (this.messageText) {
-      this.dataservice.send({ message: this.messageText, member: this.profile.username, channel: this.selectChannel, group: this.groupName });
+    if (this.messageText || this.imageName) {
+      this.dataservice.send({ message: this.messageText, member: this.profile.username, channel: this.selectChannel, group: this.groupName, image: this.profile.imageName, sendImage: this.imageName });
       this.messageText = null;
     } else {
       console.log("no message");

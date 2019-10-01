@@ -9,8 +9,9 @@ module.exports = {
          console.log("new connection")
 
          socket.on("message", data => {
+
             socket.join(data.channel);
-            console.log(data)
+
 
             groupCollection.find({ group: data.group }).toArray((err, group) => {
                console.log(group[0])
@@ -21,6 +22,7 @@ module.exports = {
                group[0].channels[channelIndex].messages.push(data)
                groupCollection.replaceOne({ group: data.group }, group[0], () => {
                   groupCollection.find({ group: data.group }).toArray((err, newGroup) => {
+                     console.log("--0---")
                      console.log(newGroup[0].channels[channelIndex].messages)
                      io.to(data.channel).emit("message", newGroup[0].channels[channelIndex].messages);
 
@@ -30,6 +32,7 @@ module.exports = {
 
 
          });
+
 
          socket.on("leave", data => {
 
@@ -68,7 +71,7 @@ module.exports = {
 
 
             socket.join(data.channel);
-            console.log(data.channel)
+
             data.message = "Joined the channel:"
 
 

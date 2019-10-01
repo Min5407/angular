@@ -58,7 +58,7 @@ export class ChannelsComponent implements OnInit {
     var dataJson = JSON.stringify(chat);
     sessionStorage.setItem("chat", dataJson);
     console.log(this.profile.username + "dd");
-    this.dataservice.joinChat({ member: this.profile.username, channel: channel, group: currentGroup })
+    this.dataservice.joinChat({ member: this.profile.username, channel: channel, group: currentGroup, image: this.profile.imageName })
     this.router.navigateByUrl("groups/channels/chat");
   }
 

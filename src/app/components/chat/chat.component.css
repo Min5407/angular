@@ -70,6 +70,11 @@
   margin: 5rem auto;
   width: 80%;
 }
+#sendImage{
+    display: inline-block;
+}
+
+
 #button{
   margin: 1rem;
   padding: 1rem;

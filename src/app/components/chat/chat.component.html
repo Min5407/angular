@@ -23,9 +23,26 @@
   </div>
 
   <div class="actionBox">
-    <ul class="commentList">
+    <ul class="commentList" #scrollMe [scrollTop]="scrollMe.scrollHeight">
 
-      <li *ngFor="let message of messages">{{message.member}}: {{ message.message }}</li>
+      <li *ngFor="let message of messages">
+        <div class="commenterImage">
+          <img src="http://localhost:3000/images/{{message.image}}" />
+        </div>
+        <div *ngIf="message.message != undefined">
+          {{message.member}}: {{ message.message }}
+        </div>
+        <div *ngIf="message.message == undefined">
+          {{message.member}}:
+        </div>
+        <div id="sendImage" *ngIf="message.sendImage != undefined">
+          <br>
+          <img withd="200px" height="200px" src="http://localhost:3000/images/{{message.sendImage}}" />
+        </div>
+
+
+      </li>
+
       <!-- <li *ngFor="let message of messages">
         {{message.member}}
         <div class="commenterImage">
@@ -42,7 +59,7 @@
       <li>
         {{message}}
       </li> -->
-      <li>
+      <!-- <li>
         <div class="commenterImage">
           <img src="http://placekitten.com/50/50" />
 
@@ -54,7 +71,7 @@
           <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
 
         </div>
-      </li>
+      </li> -->
 
 
 
@@ -65,9 +82,17 @@
           placeholder="Your comments" />
       </div>
       <div class="form-group">
-        <button id="button" class="btn btn-default" (click)="sendMessage(messageText)"> Add</button>
+        <button id="button" class="btn btn-default" (click)="sendMessage(messageText)">
+          Add</button>
       </div>
     </form>
+
+    <input type="file" (change)="onFileSelected($event)" name="uploadFile" />
+    <button type="submit" c (click)="onUpload()">
+      upload
+    </button>
+
     <button (click)="leaveChat()"> Leave</button>
+
   </div>
 </div>

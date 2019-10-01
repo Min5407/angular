@@ -26,6 +26,7 @@ export class DataService {
   private socket = io(this.backend);
 
   imgUpload(fd) {
+
     return this.http.post<any>(this.backend + '/api/upload', fd)
   }
   public leave(data): void {
