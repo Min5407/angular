@@ -125,6 +125,7 @@ describe('server test', () => {
 
          })
    })
+
    // it("invite a user to channel", function () {
    //    request(app)
    //       .post("/channel/invite")
@@ -194,7 +195,7 @@ describe('server test', () => {
 
    it("/group/delete", function () {
       request(app)
-         .post("/api/delete")
+         .post("/group/delete")
          .send({ group: 'testing' })
          .end((err, res) => {
             res.should.have.status(200);

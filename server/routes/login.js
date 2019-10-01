@@ -345,7 +345,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
     }
     console.log("-----")
 
-    console.log(req.body)
+    connsole.log(req.body)
     console.log("-----")
 
     groupCollection.deleteOne({ group: req.body.group }, () => {
