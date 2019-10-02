@@ -31,6 +31,26 @@ This assignment uses github, a git repository hosting service, to manage the pro
         "groupAdmin": "test2",
         "assis": "Super",
         "members": ["Super", "test3"]
+        "channels": [
+        {
+        "group": "group2",
+        "groupChannels": [
+        "channel 2"
+        ],
+        "members": [
+        "super",
+        "test1"
+        ],
+        "messages": [
+        {
+        "username": "super",
+        "message": "whats up",
+        "image": "wfw.jpg",
+        "sendImage": "sfwf.png"
+        }
+        ]
+        }
+        
       }
     }
 
@@ -70,6 +90,21 @@ This assignment uses github, a git repository hosting service, to manage the pro
  
  * http://local:3000/channel/invite (post) :This route is used for adding member to the channel and it has the same parameters as the deleting member routes. This will add the member to the channel and returns the updated data back to the client side.
  
+ *    socket. on(“connection”): this is a socket that is responsible for connecting the socket.
+ 
+ *    socket. On(“message”): this is a function that is responsible for receiving the chat data from the client side. This is also where the new message will be stored in the database.
+ 
+ *    Io.to(data.channel).emit(“message”): This is responsible for sending the message back only to the channel where the user is in in real time. 
+ 
+ *    Socket. On(‘leave”) : this is called when a user clicks a leave button to leave chat. This route will make the user to leave the socket once the user clicks the leave button in the web page.
+ 
+ *    Io.to(data.channel).emit(“left”): This is used to send the message that certain user has left to others in the channel chat. 
+ 
+ *    Socket. On(‘join”): This is used to get the data from the client side once the user clicks the chat button to enter the chat component. 
+ 
+ *    Io.to(data.channel).emit(“joined”): this is used to get the joined message from the server side and to display it on the client side.
+ 
+ 
  
 
 # Angular components / Services / server
@@ -100,7 +135,7 @@ This assignment uses github, a git repository hosting service, to manage the pro
   
   ### Services
   
-  1. Data service: This service is used for creating functions which is used for a client and server to communicate to each other.
+  1. Data service: This service is used for creating functions which is used for a client and server to communicate to each other. This includes storing data in mongo dB database and also using socket to communicate with the server side in real time.
   
  # Node server architecture
  
@@ -110,7 +145,9 @@ This assignment uses github, a git repository hosting service, to manage the pro
   
   2. login.js: This is a module that exports file which contains a lot of function for the routes. This functions will be listened once the components call a function from a service then the service function will help to communicate with this functions. 
   
-  3. data.json: This file is used for storing hard code data such as users and groups. This file will be used in the login.js file. In the starting of a function, the login.js will read the file( data.json) and writes it back to the file whenever there is a change in the data such as adding group or user.
+  3. socket.js: This is a module that is responsible for chat system in this project. All the functions in this file will be executed once a user joins, leaves or send a message to the chat. These functions are responsible for sending message to the server side and emitting data back to the client side once its called.
+  
+  4.  data.json: This file is used for storing hard code data such as users and groups. This file will be used in the login.js file. In the starting of a function, the login.js will read the file( data.json) and writes it back to the file whenever there is a change in the data such as adding group or user.
   
   # State Change
   
