@@ -83,7 +83,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
       if (count == 0) {
         collection.insertOne(newUser, (err, dbres) => {
           if (err) throw err;
-          res.send(dbres);
+          res.send(true);
         })
       } else {
         res.send(false);
@@ -343,10 +343,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
     if (!req.body) {
       return res.sendStatus(400);
     }
-    console.log("-----")
 
-    connsole.log(req.body)
-    console.log("-----")
 
     groupCollection.deleteOne({ group: req.body.group }, () => {
       collection.updateMany({}, { $pull: { groups: req.body.group } }, () => {
@@ -368,7 +365,7 @@ module.exports = function (db, app, path, ObjectID, formidable) {
     if (!req.body) {
       return res.sendStatus(400);
     }
-
+    console.log(req.body)
 
     groupCollection.find({ group: req.body.group }).toArray((err, data) => {
       let membersExist = data[0].members

@@ -38,4 +38,4 @@ import { ChatComponent } from './components/chat/chat.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
