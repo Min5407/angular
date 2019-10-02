@@ -157,6 +157,8 @@ This assignment uses github, a git repository hosting service, to manage the pro
   ## server:
    In the server, when a request has been made to a server, server uses the data (parameters) from the client and do what it needs to be done and resends the updated data back to the client side. For example, If the client wants to delete a group and wants to have a data without that particular group then the server will help to delete the group from the file (data.json) and sends the updated group back to the client side so that client can display the updated data.
   
+  ## Test
+        In terminal, make sure that you are in assingment 1 folder and type "npm run-script testintegrationTest" to test the routes of this project.
 
 # Assignment1
 
