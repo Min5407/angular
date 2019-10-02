@@ -15,7 +15,7 @@ export class ChatComponent implements OnInit {
   users;
   groupName;
   groupAssis;
-
+  imageValid: boolean;
   valid;
 
   chat;
@@ -111,20 +111,22 @@ export class ChatComponent implements OnInit {
 
   }
   //upload the image file 
-  onUpload() {
-    const fd = new FormData();
-    fd.append('image', this.selectedFile, this.selectedFile.name);
-    this.dataservice.imgUpload(fd).subscribe(res => {
+  // onUpload() {
+  //   const fd = new FormData();
+  //   fd.append('image', this.selectedFile, this.selectedFile.name);
+  //   this.dataservice.imgUpload(fd).subscribe(res => {
 
-      this.imagePath = res.data.filename;
-      console.log(res.data.filename + " " + res.data.size)
-    })
-    // console.log(this.myDiv.nativeElement.innerHTML);
+  //     this.imagePath = res.data.filename;
+  //     console.log(res.data.filename + " " + res.data.size)
+  //   })
+
+  //   this.imageName = null;
+  //   // console.log(this.myDiv.nativeElement.innerHTML);
 
 
 
 
-  }
+  // }
 
   //selects the image 
   onFileSelected(event) {
@@ -133,7 +135,7 @@ export class ChatComponent implements OnInit {
     this.selectedFile = event.target.files[0];
     // event.target.value = null
     // Added this
-
+    this.imageValid = true;
 
 
 
@@ -141,10 +143,28 @@ export class ChatComponent implements OnInit {
 
   //sends the message to the server side
   sendMessage() {
+    if (this.imageValid == true) {
+
+
+      const fd = new FormData();
+      fd.append('image', this.selectedFile, this.selectedFile.name);
+      this.dataservice.imgUpload(fd).subscribe(res => {
+
+        this.imagePath = res.data.filename;
+        console.log(res.data.filename + " " + res.data.size)
+      })
+    }
+
+
+    // console.log(this.myDiv.nativeElement.innerHTML);
+
+
     // this.dataservice.sendMessage({ channel: this.selectChannel, member: this.profile.username, message: this.messageText });
     if (this.messageText || this.imageName) {
       this.dataservice.send({ message: this.messageText, member: this.profile.username, channel: this.selectChannel, group: this.groupName, image: this.profile.imageName, sendImage: this.imageName });
       this.messageText = null;
+      this.imageName = null;
+      this.imageValid = false;
     } else {
       console.log("no message");
     }

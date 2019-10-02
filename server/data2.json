@@ -50,6 +50,18 @@
           "group": "group2",
           "groupChannels": [
             "channel 2"
+          ],
+          "members": [
+            "super",
+            "test1"
+          ],
+          "messages": [
+            {
+              "username": "super",
+              "message": "whats up",
+              "image": "wfw.jpg",
+              "sendImage": "sfwf.png"
+            }
           ]
         },
         {

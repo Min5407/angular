@@ -86,11 +86,19 @@
           Add</button>
       </div>
     </form>
+    <i class="fa fa-file">
+      <input id="myDiv" type="file" (change)="onFileSelected($event)" name="uploadFile" />
+    </i>
+    <!-- <button type="submit" (click)="onUpload()">
 
-    <input id="myDiv" type="file" (change)="onFileSelected($event)" name="uploadFile" />
-    <button type="submit" c (click)="onUpload()">
       upload
-    </button>
+
+
+
+
+    </button> -->
+
+
 
     <button (click)="leaveChat()"> Leave</button>
 

@@ -131,6 +131,182 @@ describe('server test', () => {
 
          })
    })
+
+
+
+   it("delete  a channel", function () {
+      request(app)
+         .post("/api/register")
+         .send({
+            email: 'testing1@test.com',
+            password: '1',
+            username: 'testing2',
+            birthday: '0001-01-01',
+            type: 'normal',
+            imageName: 'Picture1.png'
+         })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("boolean");
+
+         })
+   })
+
+
+   it("delete a group", function () {
+      request(app)
+         .post("/group/delete")
+         .send({ group: 'testing' })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+
+         })
+   })
+
+   it("delete user", function () {
+      request(app)
+         .post("/api/delete")
+         .send({ username: 'testing' })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+
+         })
+   })
+
+
+
+
+   it("user authentication", function () {
+      request(app)
+         .post("/api/auth")
+         .send({ username: 'normal2', password: '1' })
+         .end((err, res) => {
+            res.should.have.status(200);
+
+            res.body.should.be.a("object");
+         })
+   })
+
+
+
+   it("register a new user", function () {
+      request(app)
+         .post("/api/register")
+         .send({
+            email: 'testing2@test.com',
+            password: '1',
+            username: 'testing2',
+            birthday: '0001-01-01',
+            type: 'normal',
+            imageName: 'Picture1.png'
+         })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("boolean");
+
+         })
+   })
+
+   it("give a super", function () {
+      request(app)
+         .post("/giveSuper")
+         .send({
+            _id: '5d92f0aef43a367a0e0bfcf2',
+            email: 'testing2@test.com',
+            password: '1',
+            username: 'testing2',
+            birthday: '0001-01-01',
+            type: 'normal',
+            imageName: 'Picture1.png',
+            valid: '',
+            groups: []
+         })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+
+         })
+   })
+
+   it("create a group", function () {
+      request(app)
+         .post("/group/create")
+         .send({
+            group: 'testing2',
+            members: ['super', 'normal2'],
+            selectedAssis: 'normal2',
+            groupAdmin: 'super'
+
+         })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("boolean");
+
+         })
+   })
+
+
+   it("creating  a channel", function () {
+      request(app)
+         .post("/api/register")
+         .send({
+            email: 'testing1@test.com',
+            password: '1',
+            username: 'testing3',
+            birthday: '0001-01-01',
+            type: 'normal',
+            imageName: 'Picture1.png'
+         })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("boolean");
+
+         })
+   })
+
+   it("delete  a channel", function () {
+      request(app)
+         .post("/api/register")
+         .send({
+            email: 'testing1@test.com',
+            password: '1',
+            username: 'testing3',
+            birthday: '0001-01-01',
+            type: 'normal',
+            imageName: 'Picture1.png'
+         })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("boolean");
+
+         })
+   })
+
+
+   it("delete a group", function () {
+      request(app)
+         .post("/group/delete")
+         .send({ group: 'testing2' })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+
+         })
+   })
+
+   it("delete user", function () {
+      request(app)
+         .post("/api/delete")
+         .send({ username: 'testing2' })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+
+         })
+   })
+
    // it("invite a group member", function () {
    //    request(app)
    //       .post("/groups/group/invite")
@@ -212,46 +388,6 @@ describe('server test', () => {
 
 
 
-   it("delete  a channel", function () {
-      request(app)
-         .post("/api/register")
-         .send({
-            email: 'testing1@test.com',
-            password: '1',
-            username: 'testing2',
-            birthday: '0001-01-01',
-            type: 'normal',
-            imageName: 'Picture1.png'
-         })
-         .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a("boolean");
-
-         })
-   })
-
-
-   it("delete a group", function () {
-      request(app)
-         .post("/group/delete")
-         .send({ group: 'testing' })
-         .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a("array");
-
-         })
-   })
-
-   it("delete user", function () {
-      request(app)
-         .post("/api/delete")
-         .send({ username: 'testing' })
-         .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a("array");
-
-         })
-   })
 
 
 
