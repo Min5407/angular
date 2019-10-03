@@ -134,23 +134,7 @@ describe('server test', () => {
 
 
 
-   it("delete  a channel", function () {
-      request(app)
-         .post("/api/register")
-         .send({
-            email: 'testing1@test.com',
-            password: '1',
-            username: 'testing2',
-            birthday: '0001-01-01',
-            type: 'normal',
-            imageName: 'Picture1.png'
-         })
-         .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a("boolean");
 
-         })
-   })
 
 
    it("delete a group", function () {
@@ -174,6 +158,17 @@ describe('server test', () => {
 
          })
    })
+   it("delete user", function () {
+      request(app)
+         .post("/api/delete")
+         .send({ username: 'testing3' })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+
+         })
+   })
+
 
 
 
@@ -300,6 +295,17 @@ describe('server test', () => {
       request(app)
          .post("/api/delete")
          .send({ username: 'testing2' })
+         .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+
+         })
+   })
+
+   it("delete user", function () {
+      request(app)
+         .post("/api/delete")
+         .send({ username: 'testing3' })
          .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a("array");

@@ -42,6 +42,8 @@ export class RegisterComponent implements OnInit {
       this.router.navigateByUrl("/account");
     }
   }
+
+  // uploads the image file
   onUpload() {
     const fd = new FormData();
     fd.append('image', this.selectedFile, this.selectedFile.name);
@@ -51,6 +53,8 @@ export class RegisterComponent implements OnInit {
       console.log(res.data.filename + " " + res.data.size)
     })
   }
+
+  //selects the image when user clicks the image
   onFileSelected(event) {
     this.imageName = event.target.files[0].name;
     this.selectedFile = event.target.files[0];
